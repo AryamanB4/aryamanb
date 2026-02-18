@@ -1,75 +1,491 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aryaman Bhatia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aryaman Bhatia | Portfolio</title>
+
+  <!-- Nice font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#fafafa; color:#111; }
-    header { background:#111; color:#fff; padding:48px 16px; }
-    .wrap { max-width: 960px; margin: 0 auto; }
-    nav a { color:#fff; text-decoration:none; margin-right:14px; opacity:.9; }
-    nav a:hover { opacity:1; text-decoration:underline; }
-    main { padding: 28px 16px 60px; }
-    section { background:#fff; border:1px solid #e6e6e6; border-radius:14px; padding:22px; margin: 16px 0; }
-    h1 { margin:0 0 10px; font-size: 34px; }
-    h2 { margin:0 0 10px; font-size: 22px; }
-    .btn { display:inline-block; padding:10px 14px; border-radius:10px; border:1px solid #111; text-decoration:none; color:#111; margin-right:10px; }
-    .btn.primary { background:#111; color:#fff; }
+    :root{
+      --bg: #0b0f19;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --muted2: rgba(255,255,255,0.55);
+      --accent: #7c3aed;
+      --accent2:#22c55e;
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+      --max: 1020px;
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,0.28), transparent 55%),
+                  radial-gradient(900px 700px at 85% 25%, rgba(34,197,94,0.18), transparent 50%),
+                  radial-gradient(1200px 900px at 50% 90%, rgba(59,130,246,0.16), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a{ color: inherit; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 22px 18px; }
+
+    /* Top bar */
+    .topbar{
+      position: sticky; top:0; z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,25,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+    .dot{
+      width: 10px; height: 10px; border-radius: 99px;
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.18);
+    }
+    nav a{
+      text-decoration:none;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 14px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+    }
+    nav a:hover{
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.10);
+    }
+
+    /* Hero */
+    .hero{ padding: 46px 0 14px; }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .panel{
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-main{ padding: 28px; }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(124,58,237,0.14);
+      border: 1px solid rgba(124,58,237,0.28);
+      color: rgba(255,255,255,0.90);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    h1{
+      margin: 14px 0 8px;
+      font-size: clamp(32px, 4vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 58ch;
+    }
+    .btns{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 16px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap: 10px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      text-decoration:none;
+      font-weight: 700;
+      font-size: 14px;
+      background: rgba(255,255,255,0.06);
+    }
+    .btn:hover{ background: rgba(255,255,255,0.10); }
+    .btn.primary{
+      border-color: rgba(124,58,237,0.35);
+      background: linear-gradient(135deg, rgba(124,58,237,0.95), rgba(96,165,250,0.85));
+      color: #0b0f19;
+    }
+    .btn.primary:hover{ filter: brightness(1.02); }
+    .btn small{ font-weight: 800; opacity: 0.9; }
+
+    .hero-side{
+      padding: 18px;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mini{
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .mini h3{ margin:0 0 6px; font-size: 14px; letter-spacing: -0.01em; }
+    .mini p{ margin:0; color: var(--muted); font-size: 13px; }
+    .tags{ display:flex; flex-wrap:wrap; gap: 8px; margin-top: 10px; }
+    .tag{
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* Sections */
+    section{ margin-top: 18px; }
+    .section-title{
+      display:flex; align-items:baseline; justify-content:space-between;
+      gap: 10px;
+      margin: 18px 0 10px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    .section-title span{
+      color: var(--muted2);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .card{
+      padding: 16px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .card:hover{ background: rgba(255,255,255,0.08); }
+    .card h3{ margin: 0 0 4px; font-size: 15px; }
+    .meta{ color: var(--muted2); font-size: 13px; font-weight: 600; }
+    .card p{ margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+    .bullets{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .bullets li{ margin: 6px 0; }
+    .pillrow{ display:flex; flex-wrap:wrap; gap: 8px; margin-top: 12px; }
+    .pill{
+      font-size: 12px; font-weight: 700;
+      padding: 6px 10px; border-radius: 999px;
+      background: rgba(124,58,237,0.14);
+      border: 1px solid rgba(124,58,237,0.25);
+    }
+    .pill.green{
+      background: rgba(34,197,94,0.14);
+      border-color: rgba(34,197,94,0.25);
+    }
+    .links{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px; }
+    .links a{
+      text-decoration:none;
+      font-weight: 800;
+      font-size: 13px;
+      color: rgba(255,255,255,0.88);
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .links a:hover{ background: rgba(255,255,255,0.10); }
+
+    /* Footer */
+    footer{
+      margin-top: 26px;
+      padding: 22px 0 40px;
+      color: var(--muted2);
+      font-size: 13px;
+      text-align:center;
+    }
+
+    @media (max-width: 860px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      nav{ display:none; }
+      .grid{ grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="wrap">
-      <h1>Aryaman Bhatia</h1>
-      <p>Computing @ Queen’s • QHacks Logistics • Product/Tech</p>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="dot"></span> Aryaman Bhatia</div>
       <nav>
-        <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
+        <a href="#writing">Writing</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
-  </header>
+  </div>
 
-  <main class="wrap">
-    <section id="about">
-      <h2>About</h2>
-      <p>
-        I’m a Queen’s Computing student interested in technology, product, and how systems are built.
-        I’m involved in student organizations and hackathons, and I like turning ideas into practical projects.
-      </p>
-    </section>
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div class="panel hero-main">
+        <div class="kicker">👋 Queen’s Computing • Building + Leading</div>
+        <h1>Tech, product, and systems — with a bias for execution.</h1>
+        <p class="subtitle">
+          I’m a Computing student at Queen’s University. I lead logistics and outreach for student orgs,
+          and I build projects that make processes faster and cleaner (like MedQuick).
+        </p>
 
+        <div class="btns">
+          <a class="btn primary" href="#projects">See projects</a>
+          <a class="btn" href="#experience">Experience</a>
+          <a class="btn" href="resume.pdf" target="_blank" rel="noreferrer">Resume</a>
+          <a class="btn" href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <div class="panel hero-side">
+        <div class="mini">
+          <h3>Focus</h3>
+          <p>Product thinking • Operations • Building useful tools</p>
+          <div class="tags">
+            <span class="tag">Hackathons</span>
+            <span class="tag">Leadership</span>
+            <span class="tag">Tech</span>
+            <span class="tag">Systems</span>
+          </div>
+        </div>
+
+        <div class="mini">
+          <h3>Currently</h3>
+          <p>Events & Outreach Manager @ Greenovation • Co-Director Logistics @ QHacks</p>
+        </div>
+
+        <div class="mini">
+          <h3>Links</h3>
+          <p>
+            <a href="#" target="_blank" rel="noreferrer">LinkedIn</a> ·
+            <a href="#" target="_blank" rel="noreferrer">GitHub</a> ·
+            <a href="mailto:youremail@example.com">Email</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience -->
     <section id="experience">
-      <h2>Experience</h2>
-      <ul>
-        <li><strong>Co-Director of Logistics — QHacks</strong> (2025–2026)</li>
-        <li><strong>Events & Outreach Manager — Greenovation</strong> (2025–Present)</li>
-        <li><strong>School Ambassador</strong> (Past)</li>
-        <li><strong>Co-Director of Technology — Non-profit</strong> (Past)</li>
-      </ul>
+      <div class="section-title">
+        <h2>Experience</h2>
+        <span>Leadership + operations + community</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Co-Director of Logistics — QHacks 25–26</h3>
+          <div class="meta">Queen’s University • 2025–2026</div>
+          <ul class="bullets">
+            <li>Coordinated venues, schedules, and on-site operations for a major campus hackathon.</li>
+            <li>Worked with campus services, sponsors, and volunteers to deliver smooth execution.</li>
+            <li>Managed logistics planning, communications, and day-of issue handling.</li>
+          </ul>
+          <div class="pillrow">
+            <span class="pill">Operations</span>
+            <span class="pill green">Leadership</span>
+            <span class="pill">Event logistics</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Events & Outreach Manager — Greenovation</h3>
+          <div class="meta">Queen’s • 2025–Present</div>
+          <ul class="bullets">
+            <li>Planned events and supported promotion initiatives across campus.</li>
+            <li>Contacted companies for sponsorships and partnership opportunities.</li>
+            <li>Helped coordinate event logistics and communications.</li>
+          </ul>
+          <div class="pillrow">
+            <span class="pill">Outreach</span>
+            <span class="pill green">Sponsorships</span>
+            <span class="pill">Events</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>School Ambassador</h3>
+          <div class="meta">Past</div>
+          <ul class="bullets">
+            <li>Supported outreach, tours, and student engagement initiatives.</li>
+            <li>Represented the school and helped prospective students navigate questions.</li>
+          </ul>
+          <div class="pillrow">
+            <span class="pill">Communication</span>
+            <span class="pill green">Community</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Co-Director of Technology — Non-profit</h3>
+          <div class="meta">Past</div>
+          <ul class="bullets">
+            <li>Led technology direction and supported project delivery.</li>
+            <li>Coordinated with team members to ship features and maintain systems.</li>
+          </ul>
+          <div class="pillrow">
+            <span class="pill">Tech leadership</span>
+            <span class="pill green">Teamwork</span>
+          </div>
+        </div>
+      </div>
     </section>
 
+    <!-- Projects -->
     <section id="projects">
-      <h2>Projects</h2>
-      <p><strong>MedQuick</strong> — Simplifies hospital admin by condensing patient data into a secure QR code for faster check-in.</p>
-      <p>
-        <a class="btn" href="#" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="btn" href="#" target="_blank" rel="noreferrer">Demo</a>
-      </p>
+      <div class="section-title">
+        <h2>Projects</h2>
+        <span>Things I’ve built / shipped</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>MedQuick</h3>
+          <div class="meta">QR-based patient info flow • Concept + build</div>
+          <p>
+            Simplifies hospital administration by condensing patient data into a secure QR code for faster check-in,
+            reducing paperwork and waiting time.
+          </p>
+          <div class="links">
+            <a href="#" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="#" target="_blank" rel="noreferrer">Demo / Video</a>
+            <a href="#" target="_blank" rel="noreferrer">Write-up</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>QHacks Logistics Systems</h3>
+          <div class="meta">Ops docs + scheduling + vendor coordination</div>
+          <p>
+            Planning artifacts and systems that make a large hackathon run smoothly:
+            volunteer scheduling, checklists, communications, and day-of operations.
+          </p>
+          <div class="links">
+            <a href="#" target="_blank" rel="noreferrer">Highlights</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Course / Hackathon Project</h3>
+          <div class="meta">Replace this with your next best project</div>
+          <p>
+            Add a short 1–2 sentence description. Keep it outcome focused: what it does + why it matters.
+          </p>
+          <div class="links">
+            <a href="#" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="#" target="_blank" rel="noreferrer">Demo</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Another Project</h3>
+          <div class="meta">Data / tools / automation</div>
+          <p>
+            Add another project here. Even a class assignment counts if you explain it well.
+          </p>
+          <div class="links">
+            <a href="#" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="#" target="_blank" rel="noreferrer">Write-up</a>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>
-        Email: <a href="mailto:youremail@example.com">youremail@example.com</a><br/>
-        LinkedIn: <a href="#" target="_blank" rel="noreferrer">your-link</a><br/>
-        GitHub: <a href="#" target="_blank" rel="noreferrer">AryamanB4</a>
-      </p>
-      <a class="btn primary" href="mailto:youremail@example.com">Email me</a>
+    <!-- Writing -->
+    <section id="writing">
+      <div class="section-title">
+        <h2>Writing / Research</h2>
+        <span>Optional, but makes you stand out</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Policy / Research Writing</h3>
+          <div class="meta">Add your best academic or club writing</div>
+          <p>
+            If you’ve written a strong paper or report, link it here. Even a 1-page summary works.
+          </p>
+          <div class="links">
+            <a href="#" target="_blank" rel="noreferrer">Read</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Another Writing Piece</h3>
+          <div class="meta">Blog post / reflection / case study</div>
+          <p>
+            Short, clear writing about a technical topic or a project decision can be powerful.
+          </p>
+          <div class="links">
+            <a href="#" target="_blank" rel="noreferrer">Read</a>
+          </div>
+        </div>
+      </div>
     </section>
-  </main>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <span>Let’s connect</span>
+      </div>
+
+      <div class="card">
+        <p style="margin:0; color: var(--muted);">
+          Email: <a href="mailto:youremail@example.com">youremail@example.com</a> <br/>
+          LinkedIn: <a href="#" target="_blank" rel="noreferrer">add your link</a> <br/>
+          GitHub: <a href="#" target="_blank" rel="noreferrer">AryamanB4</a>
+        </p>
+
+        <div class="btns" style="margin-top:14px;">
+          <a class="btn primary" href="mailto:youremail@example.com">Email me</a>
+          <a class="btn" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="btn" href="#" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Aryaman Bhatia • Built with GitHub Pages
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
