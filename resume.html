@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aryaman Bhatia | Resume</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .pdf{
+      width:100%;
+      height: 78vh;
+      border: 1px solid rgba(15,23,42,.10);
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 10px 24px rgba(2,6,23,0.06);
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="dot"></span> Aryaman Bhatia</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Resume</h2>
+      <span>view / download</span>
+    </div>
+
+    <div class="card">
+      <div class="btnrow">
+        <a class="btn primary" href="resume.pdf" target="_blank" rel="noreferrer">Open PDF</a>
+        <a class="btn" href="resume.pdf" download>Download</a>
+      </div>
+      <p style="margin-top:12px;">
+        If the PDF viewer doesn’t load in your browser, click <b>Open PDF</b>.
+      </p>
+    </div>
+
+    <iframe class="pdf" src="resume.pdf"></iframe>
+
+    <footer>© <span id="year"></span> Aryaman Bhatia</footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
