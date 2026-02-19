@@ -110,7 +110,7 @@ nav a:hover{
   opacity: 0.55;
   pointer-events: none;
   z-index: 0;
-  animation: blob-drift 10s ease-in-out infinite;
+  animation: blob-drift 6s ease-in-out infinite;
 }
 
 /* Ensure all hero content stays above blob */
