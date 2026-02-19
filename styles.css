@@ -98,32 +98,35 @@ nav a:hover{
   overflow: hidden;
 }
 
-/* ✅ BIG moving background glow blob (behind content) */
+/* BIG bouncing blob */
 .blob{
   position: absolute;
-  inset: auto -140px -160px auto; /* bottom-right start */
+  top: -120px;
+  left: -120px;
   width: 520px;
   height: 520px;
   border-radius: 999px;
-  background: radial-gradient(circle at 30% 30%, rgba(96,165,250,0.65), rgba(37,99,235,0.30));
-  filter: blur(12px);
-  opacity: 0.55;
+  background: radial-gradient(circle at 30% 30%, rgba(96,165,250,0.7), rgba(37,99,235,0.35));
+  filter: blur(14px);
+  opacity: 0.6;
   pointer-events: none;
   z-index: 0;
-  animation: blob-drift 6s ease-in-out infinite;
+  animation: blob-bounce 18s linear infinite;
 }
 
-/* Ensure all hero content stays above blob */
+/* Keep content above blob */
 .hero-main > *:not(.blob){
   position: relative;
   z-index: 1;
 }
 
-@keyframes blob-drift{
-  0%   { transform: translate(0px, 0px) scale(1); }
-  33%  { transform: translate(-70px, -40px) scale(1.06); }
-  66%  { transform: translate(-30px, -90px) scale(1.02); }
-  100% { transform: translate(0px, 0px) scale(1); }
+@keyframes blob-bounce{
+  0%   { transform: translate(0%, 0%); }
+  20%  { transform: translate(120%, 0%); }
+  40%  { transform: translate(120%, 90%); }
+  60%  { transform: translate(0%, 90%); }
+  80%  { transform: translate(60%, 40%); }
+  100% { transform: translate(0%, 0%); }
 }
 
 .kicker{
