@@ -82,7 +82,11 @@ nav a:hover{
   gap: 14px;
   align-items: stretch;
 }
-.hero-main{ padding: 22px; position:relative; }
+.hero-main{
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+}
 .kicker{
   display:inline-flex; align-items:center; gap:10px;
   padding: 8px 12px;
@@ -93,6 +97,43 @@ nav a:hover{
   font-weight: 800;
   font-size: 13px;
 }
+/* Moving orb (blue ball) inside hero */
+.orb{
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #2563eb);
+  box-shadow:
+    0 0 0 6px rgba(37,99,235,0.14),
+    0 16px 40px rgba(37,99,235,0.25);
+  opacity: 0.95;
+  pointer-events: none;
+  top: 22px;
+  left: 22px;
+  animation: orb-float 9s ease-in-out infinite;
+}
+
+/* Path the orb follows around the hero card */
+@keyframes orb-float{
+  0%   { transform: translate(0px, 0px); }
+  20%  { transform: translate(260px, 10px); }
+  40%  { transform: translate(360px, 150px); }
+  60%  { transform: translate(220px, 240px); }
+  80%  { transform: translate(40px, 190px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@media (max-width: 900px){
+  @keyframes orb-float{
+    0%   { transform: translate(0px, 0px); }
+    25%  { transform: translate(220px, 10px); }
+    50%  { transform: translate(240px, 160px); }
+    75%  { transform: translate(20px, 180px); }
+    100% { transform: translate(0px, 0px); }
+  }
+}
+
 h1{
   margin: 14px 0 8px;
   font-size: clamp(32px, 4vw, 46px);
