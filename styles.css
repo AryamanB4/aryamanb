@@ -105,13 +105,13 @@ nav a:hover{
   left: -120px;
   width: 520px;
   height: 520px;
-  border-radius: 999px;
+  border-radius: 888px;
   background: radial-gradient(circle at 30% 30%, rgba(96,165,250,0.7), rgba(37,99,235,0.35));
   filter: blur(14px);
   opacity: 0.6;
   pointer-events: none;
   z-index: 0;
-  animation: blob-bounce 18s linear infinite;
+  animation: blob-bounce 15s linear infinite;
 }
 
 /* Keep content above blob */
