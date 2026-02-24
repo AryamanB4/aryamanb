@@ -77,6 +77,70 @@ function Nav({ currentRoute, darkMode, onToggleDarkMode }) {
 
 function HomePage() {
   const [allReviewsExpanded, setAllReviewsExpanded] = useState(false);
+  const [selectedMobileReview, setSelectedMobileReview] = useState(null);
+
+  const showRankings = [
+    {
+      id: "friends-review",
+      rank: 1,
+      show: "Friends",
+      review: "This is my comfort show and I can start it from literally any episode. It is always fun and easy to rewatch, no matter what mood I am in. Also, to end the debate once and for all, they were on a break.",
+    },
+    {
+      id: "modern-family-review",
+      rank: 2,
+      show: "Modern Family",
+      review: "I love this show because the characters are so well written and every episode stays engaging. Watching the kids grow up while I was growing up too made it feel way more personal. It is one of those shows that is both funny and wholesome at the same time.",
+    },
+    {
+      id: "himym-review",
+      rank: 3,
+      show: "How I Met Your Mother",
+      review: "This is basically my friend group's favorite show. We are always quoting random lines from it in conversations. It just has that perfect mix of humor and moments that stick with you.",
+    },
+    {
+      id: "suits-review",
+      rank: 4,
+      show: "Suits",
+      review: "Mike and Harvey are honestly a goated duo. Their chemistry and the pace of the show make every episode fun to watch. It almost made me want to go into law for a minute.",
+    },
+    {
+      id: "b99-review",
+      rank: 5,
+      show: "Brooklyn Nine-Nine",
+      review: "This was the first sitcom I ever watched, so it will always have a special place in my heart. The cast dynamic is so good, and the show never takes itself too seriously. The Halloween heist episodes are still some of my favorites.",
+    },
+    {
+      id: "boys-review",
+      rank: 6,
+      show: "The Boys",
+      review: "This is superhero TV done right. It is funny when it needs to be, but it also has a really strong story underneath. I like how it keeps surprising you while still being entertaining every episode.",
+    },
+    {
+      id: "invincible-review",
+      rank: 7,
+      show: "Invincible",
+      review: "Another really well-written show that I genuinely enjoy. It brings out that childlike excitement in me, but it still has depth and serious moments. Definitely one of my favorite animated shows right now.",
+    },
+    {
+      id: "office-review",
+      rank: 8,
+      show: "The Office",
+      review: "I still love this show and there are so many iconic moments in it. But once Michael left, it definitely dropped a level for me. I still rewatch it, just mostly for the earlier seasons.",
+    },
+    {
+      id: "rookie-review",
+      rank: 9,
+      show: "The Rookie",
+      review: "I have not watched past season 6 yet, but I still really like the show. The characters and pacing make it easy to keep watching. I was genuinely sad when Jackson died.",
+    },
+    {
+      id: "boz-review",
+      rank: 10,
+      show: "Blood of Zeus",
+      review: "Such a well-written anime, especially if you like Greek mythology. I like how it blends mythological themes with strong character arcs and action. It is one of the more underrated animated series for me.",
+    },
+  ];
 
   const syncExpandedState = () => {
     const details = Array.from(document.querySelectorAll(".review-dropdown"));
@@ -89,6 +153,16 @@ function HomePage() {
       item.open = nextState;
     });
     setAllReviewsExpanded(nextState);
+  };
+
+  const toggleReviewFromShow = (id, show, review) => {
+    const detail = document.getElementById(id);
+    if (!detail) {
+      return;
+    }
+    detail.open = !detail.open;
+    syncExpandedState();
+    setSelectedMobileReview(detail.open ? { id, show, review } : null);
   };
 
   return (
@@ -166,140 +240,35 @@ function HomePage() {
               </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>1</td>
-              <td>Friends</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    This is my comfort show and I can start it from literally any episode. It is always fun and easy to rewatch,
-                    no matter what mood I am in. Also, to end the debate once and for all, they were on a break.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Modern Family</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    I love this show because the characters are so well written and every episode stays engaging. Watching the
-                    kids grow up while I was growing up too made it feel way more personal. It is one of those shows that is
-                    both funny and wholesome at the same time.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>How I Met Your Mother</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    This is basically my friend group's favorite show. We are always quoting random lines from it in conversations.
-                    It just has that perfect mix of humor and moments that stick with you.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Suits</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    Mike and Harvey are honestly a goated duo. Their chemistry and the pace of the show make every episode fun to watch.
-                    It almost made me want to go into law for a minute.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Brooklyn Nine-Nine</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    This was the first sitcom I ever watched, so it will always have a special place in my heart. The cast dynamic
-                    is so good, and the show never takes itself too seriously. The Halloween heist episodes are still some of my favorites.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>The Boys</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    This is superhero TV done right. It is funny when it needs to be, but it also has a really strong story underneath.
-                    I like how it keeps surprising you while still being entertaining every episode.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>Invincible</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    Another really well-written show that I genuinely enjoy. It brings out that childlike excitement in me, but
-                    it still has depth and serious moments. Definitely one of my favorite animated shows right now.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>The Office</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    I still love this show and there are so many iconic moments in it. But once Michael left, it definitely
-                    dropped a level for me. I still rewatch it, just mostly for the earlier seasons.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td>The Rookie</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    I have not watched past season 6 yet, but I still really like the show. The characters and pacing make it
-                    easy to keep watching. I was genuinely sad when Jackson died.
-                  </p>
-                </details>
-              </td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>Blood of Zeus</td>
-              <td>
-                <details className="review-dropdown" onToggle={syncExpandedState}>
-                  <summary>Read review</summary>
-                  <p>
-                    Such a well-written anime, especially if you like Greek mythology. I like how it blends mythological themes
-                    with strong character arcs and action. It is one of the more underrated animated series for me.
-                  </p>
-                </details>
-              </td>
-            </tr>
+              {showRankings.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.rank}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="show-review-trigger"
+                      onClick={() => toggleReviewFromShow(item.id, item.show, item.review)}
+                    >
+                      {item.show}
+                    </button>
+                  </td>
+                  <td>
+                    <details id={item.id} className="review-dropdown" onToggle={syncExpandedState}>
+                      <summary>Read review</summary>
+                      <p>{item.review}</p>
+                    </details>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+        {selectedMobileReview && (
+          <div className="mobile-review-panel">
+            <h3>{selectedMobileReview.show}</h3>
+            <p>{selectedMobileReview.review}</p>
+          </div>
+        )}
       </section>
     </div>
   );
