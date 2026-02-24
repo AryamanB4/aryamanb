@@ -480,9 +480,8 @@ function ProjectsPage() {
 function ResumePage() {
   return (
     <div className="wrap">
-      <div className="section-title">
+      <div className="section-title experience-section-title">
         <h2>Resume</h2>
-        <span>view / download</span>
       </div>
 
       <div className="card">
