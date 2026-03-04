@@ -78,67 +78,132 @@ function Nav({ currentRoute, darkMode, onToggleDarkMode }) {
 function HomePage() {
   const [allReviewsExpanded, setAllReviewsExpanded] = useState(false);
   const [selectedMobileReview, setSelectedMobileReview] = useState(null);
+  const [revealedSpoilers, setRevealedSpoilers] = useState({});
+
+  const revealSpoiler = (id) => {
+    setRevealedSpoilers((prev) => ({ ...prev, [id]: true }));
+  };
+
+  const renderReview = (reviewParts) =>
+    reviewParts.map((part, index) => {
+      if (!part.spoiler) {
+        return (
+          <span key={`${part.id || "plain"}-${index}`}>
+            {part.text}{" "}
+          </span>
+        );
+      }
+
+      const isRevealed = !!revealedSpoilers[part.id];
+      return (
+        <span
+          key={part.id}
+          className={`spoiler-inline ${isRevealed ? "is-revealed" : ""}`}
+        >
+          <span className="spoiler-text">{part.text}</span>
+          {!isRevealed && (
+            <button
+              type="button"
+              className="spoiler-toggle"
+              onClick={() => revealSpoiler(part.id)}
+            >
+              Spoiler - Click to reveal
+            </button>
+          )}
+        </span>
+      );
+    });
 
   const showRankings = [
     {
       id: "friends-review",
       rank: 1,
       show: "Friends",
-      review: "This is my comfort show and I can start it from literally any episode. It is always fun and easy to rewatch, no matter what mood I am in. Also, to end the debate once and for all, they were on a break.",
+      reviewParts: [
+        { text: "This is my comfort show and I can start it from almost any episode and still enjoy it. The rewatch value is unreal because every character has moments that never get old, and the balance between humor and emotion is exactly why it stays at number one for me." },
+        { id: "friends-spoiler-1", spoiler: true, text: "Even after so many rewatches, Ross and Rachel's on-a-break arc still starts arguments every single time." },
+      ],
     },
     {
       id: "modern-family-review",
       rank: 2,
       show: "Modern Family",
-      review: "I love this show because the characters are so well written and every episode stays engaging. Watching the kids grow up while I was growing up too made it feel way more personal. It is one of those shows that is both funny and wholesome at the same time.",
+      reviewParts: [
+        { text: "I love this show because the writing stays sharp across so many seasons, and every family dynamic feels different in a good way. Watching the kids grow up while I was growing up made it feel a lot more personal, and the jokes still land even on repeat." },
+        { id: "modern-family-spoiler-1", spoiler: true, text: "The emotional episodes around major family milestones hit harder than most sitcoms expect you to feel." },
+      ],
     },
     {
       id: "himym-review",
       rank: 3,
       show: "How I Met Your Mother",
-      review: "This is basically my friend group's favorite show. We are always quoting random lines from it in conversations. It just has that perfect mix of humor and moments that stick with you.",
+      reviewParts: [
+        { text: "This is basically my friend group's favorite show, and we quote random lines from it all the time. It has that perfect mix of running jokes, ridiculous storytelling, and emotional moments that unexpectedly stay with you." },
+        { id: "himym-spoiler-1", spoiler: true, text: "The final stretch is still one of the most debated sitcom endings, and it always sparks a full discussion." },
+      ],
     },
     {
       id: "suits-review",
       rank: 4,
       show: "Suits",
-      review: "Mike and Harvey are honestly a goated duo. Their chemistry and the pace of the show make every episode fun to watch. It almost made me want to go into law for a minute.",
+      reviewParts: [
+        { text: "Mike and Harvey are honestly one of my favorite duos in TV. The pacing, confidence, and back-and-forth in every episode make the show super easy to binge, and it almost convinced me to go into law for a while." },
+        { id: "suits-spoiler-1", spoiler: true, text: "Once the secret starts becoming public, the stakes and tension go up in a way that changes the whole tone." },
+      ],
     },
     {
       id: "b99-review",
       rank: 5,
       show: "Brooklyn Nine-Nine",
-      review: "This was the first sitcom I ever watched, so it will always have a special place in my heart. The cast dynamic is so good, and the show never takes itself too seriously. The Halloween heist episodes are still some of my favorites.",
+      reviewParts: [
+        { text: "This was the first sitcom I watched properly, so it will always be special to me. The cast dynamic is amazing, the humor stays light without feeling shallow, and the Halloween heists are still some of my favorite recurring episodes in any show." },
+        { id: "b99-spoiler-1", spoiler: true, text: "Even when the show handles heavier topics, it still keeps the characters feeling real and close." },
+      ],
     },
     {
       id: "boys-review",
       rank: 6,
       show: "The Boys",
-      review: "This is superhero TV done right. It is funny when it needs to be, but it also has a really strong story underneath. I like how it keeps surprising you while still being entertaining every episode.",
+      reviewParts: [
+        { text: "This is superhero TV done right for me. It is chaotic, funny, and sharp when it needs to be, but underneath all of that there is still a really strong story and commentary that keeps you hooked." },
+        { id: "boys-spoiler-1", spoiler: true, text: "The major power shifts between characters every season keep raising the stakes in ways you do not see coming." },
+      ],
     },
     {
       id: "invincible-review",
       rank: 7,
       show: "Invincible",
-      review: "Another really well-written show that I genuinely enjoy. It brings out that childlike excitement in me, but it still has depth and serious moments. Definitely one of my favorite animated shows right now.",
+      reviewParts: [
+        { text: "Another really well-written show that I genuinely enjoy. It brings out that childlike excitement from superhero animation, but it still has real emotional weight and consequences that make it stand out." },
+        { id: "invincible-spoiler-1", spoiler: true, text: "Some of the family reveal moments completely shift your understanding of the main conflict." },
+      ],
     },
     {
       id: "office-review",
       rank: 8,
       show: "The Office",
-      review: "I still love this show and there are so many iconic moments in it. But once Michael left, it definitely dropped a level for me. I still rewatch it, just mostly for the earlier seasons.",
+      reviewParts: [
+        { text: "I still love this show and there are so many iconic moments that I can rewatch forever. The awkward humor and character bits are still unmatched, even if some seasons work better than others." },
+        { id: "office-spoiler-1", spoiler: true, text: "After Michael leaves, the energy changes a lot, so I mostly revisit the earlier seasons first." },
+      ],
     },
     {
       id: "rookie-review",
       rank: 9,
       show: "The Rookie",
-      review: "I have not watched past season 6 yet, but I still really like the show. The characters and pacing make it easy to keep watching. I was genuinely sad when Jackson died.",
+      reviewParts: [
+        { text: "I have not watched past season 6 yet, but I still really like the show. The pacing is easy to follow, the cast chemistry works well, and it is one of those series you can keep watching without forcing it." },
+        { id: "rookie-spoiler-1", spoiler: true, text: "Jackson's death was genuinely one of the hardest moments in the show for me." },
+      ],
     },
     {
       id: "boz-review",
       rank: 10,
       show: "Blood of Zeus",
-      review: "Such a well-written anime, especially if you like Greek mythology. I like how it blends mythological themes with strong character arcs and action. It is one of the more underrated animated series for me.",
+      reviewParts: [
+        { text: "Such a well-written animated show, especially if you like Greek mythology. I like how it blends mythological themes with solid character arcs and action scenes without feeling empty." },
+        { id: "boz-spoiler-1", spoiler: true, text: "The conflict between gods and family loyalties creates some of the strongest turning points in the series." },
+      ],
     },
   ];
 
@@ -155,14 +220,14 @@ function HomePage() {
     setAllReviewsExpanded(nextState);
   };
 
-  const toggleReviewFromShow = (id, show, review) => {
+  const toggleReviewFromShow = (id, show, reviewParts) => {
     const detail = document.getElementById(id);
     if (!detail) {
       return;
     }
     detail.open = !detail.open;
     syncExpandedState();
-    setSelectedMobileReview(detail.open ? { id, show, review } : null);
+    setSelectedMobileReview(detail.open ? { id, show, reviewParts } : null);
   };
 
   return (
@@ -247,7 +312,7 @@ function HomePage() {
                     <button
                       type="button"
                       className="show-review-trigger"
-                      onClick={() => toggleReviewFromShow(item.id, item.show, item.review)}
+                      onClick={() => toggleReviewFromShow(item.id, item.show, item.reviewParts)}
                     >
                       {item.show}
                     </button>
@@ -255,7 +320,7 @@ function HomePage() {
                   <td>
                     <details id={item.id} className="review-dropdown" onToggle={syncExpandedState}>
                       <summary>Read review</summary>
-                      <p>{item.review}</p>
+                      <p>{renderReview(item.reviewParts)}</p>
                     </details>
                   </td>
                 </tr>
@@ -266,7 +331,7 @@ function HomePage() {
         {selectedMobileReview && (
           <div className="mobile-review-panel">
             <h3>{selectedMobileReview.show}</h3>
-            <p>{selectedMobileReview.review}</p>
+            <p>{renderReview(selectedMobileReview.reviewParts)}</p>
           </div>
         )}
       </section>

@@ -514,6 +514,45 @@ h1 span{
   color: var(--muted);
 }
 
+.spoiler-inline{
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  border-radius: 8px;
+  margin-right: 4px;
+}
+
+.spoiler-text{
+  filter: blur(4px);
+  user-select: none;
+  transition: filter .2s ease;
+}
+
+.spoiler-toggle{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(84,116,200,0.42);
+  background: rgba(237,241,250,0.95);
+  color: #1b2442;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.spoiler-toggle:hover{
+  background: #ffffff;
+}
+
+.spoiler-inline.is-revealed .spoiler-text{
+  filter: none;
+  user-select: text;
+}
+
 .show-review-trigger{
   border: 0;
   background: transparent;
@@ -740,6 +779,12 @@ html[data-theme="dark"] .review-toggle-all{
 
 html[data-theme="dark"] .review-dropdown p{
   color: #edf2ff;
+}
+
+html[data-theme="dark"] .spoiler-toggle{
+  border-color: rgba(127,157,225,0.54);
+  background: rgba(24,33,66,0.96);
+  color: #f3f6ff;
 }
 
 html[data-theme="dark"] .card p,
