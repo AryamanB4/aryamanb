@@ -535,16 +535,20 @@ function ProjectsPage() {
 
         <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
           <summary>
-            <h3>Hackathon Ops Systems - QHacks</h3>
-            <div className="meta">Logistics + execution</div>
+            <h3>DeepShield</h3>
+            <div className="meta">AI deepfake detection project</div>
           </summary>
           <p>
-            Built planning systems that make large events run smoothly (checklists, coordination, comms).
+            Built DeepShield to detect manipulated media and improve trust in digital content through an accessible detection workflow.
           </p>
           <ul className="bullets">
-            <li>Coordinated vendors, services, and on-site operations.</li>
-            <li>Optimized reliability for a 500+ person event.</li>
+            <li>Created during HackHer 2026 with a focus on practical, user-friendly verification.</li>
+            <li>Combined technical implementation with clear demo storytelling and delivery.</li>
           </ul>
+          <div className="btnrow">
+            <a className="btn" href="https://github.com/abdelrmobarak/hackher2026" target="_blank" rel="noreferrer">GitHub</a>
+            <a className="btn" href="https://www.youtube.com/watch?v=qTgxovIvxF0&feature=youtu.be" target="_blank" rel="noreferrer">Demo</a>
+          </div>
         </details>
       </div>
     </div>
