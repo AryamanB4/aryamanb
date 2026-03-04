@@ -120,8 +120,8 @@ function HomePage() {
       rank: 1,
       show: "Friends",
       reviewParts: [
-        { text: "This is my comfort show and I can start it from almost any episode and still enjoy it. The rewatch value is unreal because every character has moments that never get old, and the balance between humor and emotion is exactly why it stays at number one for me." },
-        { id: "friends-spoiler-1", spoiler: true, text: "Even after so many rewatches, Ross and Rachel's on-a-break arc still starts arguments every single time." },
+        { text: "This is my comfort show and I can start it from literally any episode. It is always fun and easy to rewatch, no matter what mood I am in." },
+        { id: "friends-spoiler-1", spoiler: true, text: "To end the debate for once and for all, Ross and Rachel were on a BREAK." },
       ],
     },
     {
@@ -129,8 +129,7 @@ function HomePage() {
       rank: 2,
       show: "Modern Family",
       reviewParts: [
-        { text: "I love this show because the writing stays sharp across so many seasons, and every family dynamic feels different in a good way. Watching the kids grow up while I was growing up made it feel a lot more personal, and the jokes still land even on repeat." },
-        { id: "modern-family-spoiler-1", spoiler: true, text: "The emotional episodes around major family milestones hit harder than most sitcoms expect you to feel." },
+        { text: "I love this show because the characters are so well written and every episode stays engaging. Watching the kids grow up while I was growing up too made it feel way more personal. It is one of those shows that is both funny and wholesome at the same time." },
       ],
     },
     {
@@ -138,8 +137,8 @@ function HomePage() {
       rank: 3,
       show: "How I Met Your Mother",
       reviewParts: [
-        { text: "This is basically my friend group's favorite show, and we quote random lines from it all the time. It has that perfect mix of running jokes, ridiculous storytelling, and emotional moments that unexpectedly stay with you." },
-        { id: "himym-spoiler-1", spoiler: true, text: "The final stretch is still one of the most debated sitcom endings, and it always sparks a full discussion." },
+        { text: "This is basically my friend group's favorite show. We are always quoting random lines from it in conversations. It just has that perfect mix of humor and moments that stick with you." },
+        { id: "himym-spoiler-1", spoiler: true, text: "Tracy (the mom) being introduced so far late in the show and Ted going back to Robin in the final episode boils my blood every time." },
       ],
     },
     {
@@ -147,8 +146,8 @@ function HomePage() {
       rank: 4,
       show: "Suits",
       reviewParts: [
-        { text: "Mike and Harvey are honestly one of my favorite duos in TV. The pacing, confidence, and back-and-forth in every episode make the show super easy to binge, and it almost convinced me to go into law for a while." },
-        { id: "suits-spoiler-1", spoiler: true, text: "Once the secret starts becoming public, the stakes and tension go up in a way that changes the whole tone." },
+        { text: "Mike and Harvey are honestly a goated duo. Their chemistry and the pace of the show make every episode fun to watch. It almost made me want to go into law for a minute." },
+        { id: "suits-spoiler-1", spoiler: true, text: "Once Mike and Rachel leave, the show kind of starts going down from there." },
       ],
     },
     {
@@ -156,8 +155,7 @@ function HomePage() {
       rank: 5,
       show: "Brooklyn Nine-Nine",
       reviewParts: [
-        { text: "This was the first sitcom I watched properly, so it will always be special to me. The cast dynamic is amazing, the humor stays light without feeling shallow, and the Halloween heists are still some of my favorite recurring episodes in any show." },
-        { id: "b99-spoiler-1", spoiler: true, text: "Even when the show handles heavier topics, it still keeps the characters feeling real and close." },
+        { text: "This was the first sitcom I ever watched, so it will always have a special place in my heart. The cast dynamic is so good, and the show never takes itself too seriously. The Halloween heist episodes are still some of my favorites." },
       ],
     },
     {
@@ -165,8 +163,7 @@ function HomePage() {
       rank: 6,
       show: "The Boys",
       reviewParts: [
-        { text: "This is superhero TV done right for me. It is chaotic, funny, and sharp when it needs to be, but underneath all of that there is still a really strong story and commentary that keeps you hooked." },
-        { id: "boys-spoiler-1", spoiler: true, text: "The major power shifts between characters every season keep raising the stakes in ways you do not see coming." },
+        { text: "This is superhero TV done right. It is funny when it needs to be, but it also has a really strong story underneath. I like how it keeps surprising you while still being entertaining every episode." },
       ],
     },
     {
@@ -174,8 +171,7 @@ function HomePage() {
       rank: 7,
       show: "Invincible",
       reviewParts: [
-        { text: "Another really well-written show that I genuinely enjoy. It brings out that childlike excitement from superhero animation, but it still has real emotional weight and consequences that make it stand out." },
-        { id: "invincible-spoiler-1", spoiler: true, text: "Some of the family reveal moments completely shift your understanding of the main conflict." },
+        { text: "Another really well-written show that I genuinely enjoy. It brings out that childlike excitement in me, but it still has depth and serious moments. Definitely one of my favorite animated shows right now." },
       ],
     },
     {
@@ -183,8 +179,8 @@ function HomePage() {
       rank: 8,
       show: "The Office",
       reviewParts: [
-        { text: "I still love this show and there are so many iconic moments that I can rewatch forever. The awkward humor and character bits are still unmatched, even if some seasons work better than others." },
-        { id: "office-spoiler-1", spoiler: true, text: "After Michael leaves, the energy changes a lot, so I mostly revisit the earlier seasons first." },
+        { text: "I still love this show and there are so many iconic moments in it." },
+        { id: "office-spoiler-1", spoiler: true, text: "Once Michael leaves, I usually stop watching in my rewatches. Still an enjoyable show, but it was goated in the earlier ones." },
       ],
     },
     {
@@ -192,8 +188,8 @@ function HomePage() {
       rank: 9,
       show: "The Rookie",
       reviewParts: [
-        { text: "I have not watched past season 6 yet, but I still really like the show. The pacing is easy to follow, the cast chemistry works well, and it is one of those series you can keep watching without forcing it." },
-        { id: "rookie-spoiler-1", spoiler: true, text: "Jackson's death was genuinely one of the hardest moments in the show for me." },
+        { text: "I have not watched past season 6 yet, but I still really like the show. The characters and pacing make it easy to keep watching." },
+        { id: "rookie-spoiler-1", spoiler: true, text: "Jackson's death was lowkey traumatic, I loved that character." },
       ],
     },
     {
@@ -201,8 +197,7 @@ function HomePage() {
       rank: 10,
       show: "Blood of Zeus",
       reviewParts: [
-        { text: "Such a well-written animated show, especially if you like Greek mythology. I like how it blends mythological themes with solid character arcs and action scenes without feeling empty." },
-        { id: "boz-spoiler-1", spoiler: true, text: "The conflict between gods and family loyalties creates some of the strongest turning points in the series." },
+        { text: "Such a well-written anime, especially if you like Greek mythology. I like how it blends mythological themes with strong character arcs and action. It is one of the more underrated animated series for me." },
       ],
     },
   ];
