@@ -363,6 +363,18 @@ h1 span{
   transform: translateY(-1px);
 }
 
+.review-toggle-all:disabled{
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.review-actions{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .section-title span{
   color: rgba(71,85,105,0.85);
   font-size: 13px;
@@ -647,6 +659,10 @@ footer{
   .review-toggle-all{
     width: 100%;
     max-width: 220px;
+  }
+  .review-actions{
+    width: 100%;
+    justify-content: center;
   }
   .table{
     min-width: 0;

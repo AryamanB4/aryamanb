@@ -215,6 +215,10 @@ function HomePage() {
     setAllReviewsExpanded(nextState);
   };
 
+  const hideAllSpoilers = () => {
+    setRevealedSpoilers({});
+  };
+
   const toggleReviewFromShow = (id, show, reviewParts) => {
     const detail = document.getElementById(id);
     if (!detail) {
@@ -285,9 +289,19 @@ function HomePage() {
       <section>
         <div className="section-title home-section-title">
           <h2>TV Show Ranking</h2>
-          <button type="button" className="review-toggle-all" onClick={toggleAllReviews}>
-            {allReviewsExpanded ? "Collapse All" : "Expand All"}
-          </button>
+          <div className="review-actions">
+            <button type="button" className="review-toggle-all" onClick={toggleAllReviews}>
+              {allReviewsExpanded ? "Collapse All" : "Expand All"}
+            </button>
+            <button
+              type="button"
+              className="review-toggle-all"
+              onClick={hideAllSpoilers}
+              disabled={Object.keys(revealedSpoilers).length === 0}
+            >
+              Hide Spoilers
+            </button>
+          </div>
         </div>
 
         <div className="table-wrap">
