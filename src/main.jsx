@@ -126,7 +126,7 @@ function HeroBlobEasterEgg() {
         return;
       }
       const blob = blobRef.current;
-      const hitPadding = 52;
+      const hitPadding = 96;
       button.style.transform = `translate(${blob.x - hitPadding}px, ${blob.y - hitPadding}px)`;
       button.style.width = `${blob.radius * 2 + hitPadding * 2}px`;
       button.style.height = `${blob.radius * 2 + hitPadding * 2}px`;
