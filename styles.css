@@ -151,10 +151,7 @@ nav a:hover{
 /* BIG bouncing blob */
 .blob-stage{
   position: absolute;
-  top: -120px;
-  left: -120px;
-  width: 520px;
-  height: 520px;
+  inset: 0;
   z-index: 0;
 }
 
@@ -168,9 +165,6 @@ nav a:hover{
 
 .blob-button{
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
   border: 0;
   padding: 0;
   border-radius: 888px;
@@ -178,7 +172,6 @@ nav a:hover{
   filter: blur(14px);
   opacity: 0.6;
   cursor: pointer;
-  animation: blob-bounce 15s linear infinite;
   transition: opacity .22s ease;
 }
 
@@ -199,15 +192,6 @@ nav a:hover{
 .hero-main > *:not(.blob-stage){
   position: relative;
   z-index: 1;
-}
-
-@keyframes blob-bounce{
-  0%   { transform: translate(0%, 0%); }
-  20%  { transform: translate(120%, 0%); }
-  40%  { transform: translate(120%, 90%); }
-  60%  { transform: translate(0%, 90%); }
-  80%  { transform: translate(60%, 40%); }
-  100% { transform: translate(0%, 0%); }
 }
 
 .kicker{
@@ -654,11 +638,6 @@ footer{
   .wrap{ padding: 14px; }
   .experience-section-title h2{ font-size: 34px; }
 
-  .blob-stage{
-    width: 420px;
-    height: 420px;
-    inset: auto -120px -140px auto;
-  }
 }
 
 @media (max-width: 700px){

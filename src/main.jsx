@@ -78,18 +78,23 @@ function Nav({ currentRoute, darkMode, onToggleDarkMode }) {
 function HeroBlobEasterEgg() {
   const stageRef = useRef(null);
   const canvasRef = useRef(null);
+  const buttonRef = useRef(null);
   const animationFrameRef = useRef(null);
   const particlesRef = useRef([]);
-  const lastTimeRef = useRef(null);
+  const blobRef = useRef({
+    x: 0,
+    y: 0,
+    vx: 170,
+    vy: 125,
+    radius: 160,
+    driftTimer: 0,
+  });
   const [exploded, setExploded] = useState(false);
 
   useEffect(() => {
-    if (!exploded) {
-      return undefined;
-    }
-
     const stage = stageRef.current;
     const canvas = canvasRef.current;
+    const button = buttonRef.current;
     if (!stage || !canvas) {
       return undefined;
     }
@@ -107,30 +112,43 @@ function HeroBlobEasterEgg() {
       canvas.style.width = `${rect.width}px`;
       canvas.style.height = `${rect.height}px`;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const blob = blobRef.current;
+      const maxX = Math.max(rect.width - blob.radius * 2, 0);
+      const maxY = Math.max(rect.height - blob.radius * 2, 0);
+      blob.x = Math.min(blob.x, maxX);
+      blob.y = Math.min(blob.y, maxY);
     };
 
-    const spawnParticles = () => {
-      const width = stage.clientWidth;
-      const height = stage.clientHeight;
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const particleCount = 24;
+    const positionBlobButton = () => {
+      if (!button) {
+        return;
+      }
+      const blob = blobRef.current;
+      button.style.transform = `translate(${blob.x}px, ${blob.y}px)`;
+      button.style.width = `${blob.radius * 2}px`;
+      button.style.height = `${blob.radius * 2}px`;
+    };
 
-      particlesRef.current = Array.from({ length: particleCount }, (_, index) => {
-        const angle = (Math.PI * 2 * index) / particleCount + (Math.random() - 0.5) * 0.35;
-        const speed = 180 + Math.random() * 180;
-        const radius = 6 + Math.random() * 10;
-
-        return {
-          x: centerX + (Math.random() - 0.5) * 10,
-          y: centerY + (Math.random() - 0.5) * 10,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 80,
-          radius,
-          settled: false,
-          color: index % 3 === 0 ? "rgba(147, 197, 253, 0.95)" : index % 3 === 1 ? "rgba(96, 165, 250, 0.92)" : "rgba(59, 130, 246, 0.9)",
-        };
-      });
+    const drawBlobParticle = (x, y, radius, alpha = 0.6) => {
+      context.save();
+      context.globalAlpha = alpha;
+      context.filter = "blur(14px)";
+      const gradient = context.createRadialGradient(
+        x - radius * 0.35,
+        y - radius * 0.35,
+        radius * 0.12,
+        x,
+        y,
+        radius
+      );
+      gradient.addColorStop(0, "rgba(96,165,250,0.78)");
+      gradient.addColorStop(1, "rgba(37,99,235,0.38)");
+      context.fillStyle = gradient;
+      context.beginPath();
+      context.arc(x, y, radius, 0, Math.PI * 2);
+      context.fill();
+      context.restore();
     };
 
     const drawParticles = () => {
@@ -139,36 +157,56 @@ function HeroBlobEasterEgg() {
       context.clearRect(0, 0, width, height);
 
       for (const particle of particlesRef.current) {
-        const gradient = context.createRadialGradient(
-          particle.x - particle.radius * 0.35,
-          particle.y - particle.radius * 0.35,
-          particle.radius * 0.15,
-          particle.x,
-          particle.y,
-          particle.radius
-        );
-        gradient.addColorStop(0, "rgba(255,255,255,0.95)");
-        gradient.addColorStop(0.35, particle.color);
-        gradient.addColorStop(1, "rgba(37, 99, 235, 0.18)");
-
-        context.beginPath();
-        context.fillStyle = gradient;
-        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        context.fill();
+        drawBlobParticle(particle.x, particle.y, particle.radius);
       }
     };
 
     const step = (timestamp) => {
-      if (!lastTimeRef.current) {
-        lastTimeRef.current = timestamp;
+      if (!canvas.dataset.lastTime) {
+        canvas.dataset.lastTime = String(timestamp);
       }
 
       const width = stage.clientWidth;
       const height = stage.clientHeight;
-      const delta = Math.min((timestamp - lastTimeRef.current) / 1000, 0.032);
-      lastTimeRef.current = timestamp;
-      const gravity = 720;
-      let movingParticles = 0;
+      const lastTime = Number(canvas.dataset.lastTime);
+      const delta = Math.min((timestamp - lastTime) / 1000, 0.032);
+      canvas.dataset.lastTime = String(timestamp);
+
+      if (!exploded && button) {
+        const blob = blobRef.current;
+        const maxX = Math.max(width - blob.radius * 2, 0);
+        const maxY = Math.max(height - blob.radius * 2, 0);
+
+        blob.driftTimer -= delta;
+        if (blob.driftTimer <= 0) {
+          blob.vx += (Math.random() - 0.5) * 70;
+          blob.vy += (Math.random() - 0.5) * 70;
+          blob.driftTimer = 0.6 + Math.random() * 1.3;
+        }
+
+        blob.x += blob.vx * delta;
+        blob.y += blob.vy * delta;
+
+        if (blob.x <= 0) {
+          blob.x = 0;
+          blob.vx = 120 + Math.random() * 120;
+        } else if (blob.x >= maxX) {
+          blob.x = maxX;
+          blob.vx = -(120 + Math.random() * 120);
+        }
+
+        if (blob.y <= 0) {
+          blob.y = 0;
+          blob.vy = 100 + Math.random() * 120;
+        } else if (blob.y >= maxY) {
+          blob.y = maxY;
+          blob.vy = -(100 + Math.random() * 120);
+        }
+
+        positionBlobButton();
+      }
+
+      const gravity = 860;
 
       for (const particle of particlesRef.current) {
         if (particle.settled) {
@@ -192,13 +230,13 @@ function HeroBlobEasterEgg() {
           particle.vy = Math.abs(particle.vy) * 0.72;
         } else if (particle.y + particle.radius >= height) {
           particle.y = height - particle.radius;
-          particle.vy = -Math.abs(particle.vy) * 0.52;
-          particle.vx *= 0.92;
+          particle.vy = -Math.abs(particle.vy) * 0.42;
+          particle.vx *= 0.9;
 
-          if (Math.abs(particle.vy) < 24) {
+          if (Math.abs(particle.vy) < 18) {
             particle.vy = 0;
           }
-          if (Math.abs(particle.vx) < 10) {
+          if (Math.abs(particle.vx) < 8) {
             particle.vx = 0;
           }
           if (particle.vy === 0 && particle.vx === 0) {
@@ -206,22 +244,25 @@ function HeroBlobEasterEgg() {
           }
         }
 
-        if (!particle.settled) {
-          movingParticles += 1;
-        }
       }
 
       drawParticles();
-
-      if (movingParticles > 0) {
-        animationFrameRef.current = window.requestAnimationFrame(step);
-      }
+      animationFrameRef.current = window.requestAnimationFrame(step);
     };
 
     syncCanvasSize();
-    spawnParticles();
+    const initialRadius = Math.max(Math.min(stage.clientWidth, 320) * 0.32, 120);
+    blobRef.current = {
+      x: Math.max(stage.clientWidth * 0.08, 0),
+      y: Math.max(stage.clientHeight * 0.08, 0),
+      vx: 170,
+      vy: 125,
+      radius: initialRadius,
+      driftTimer: 0.8,
+    };
+    positionBlobButton();
     drawParticles();
-    lastTimeRef.current = null;
+    canvas.dataset.lastTime = "";
     animationFrameRef.current = window.requestAnimationFrame(step);
 
     window.addEventListener("resize", syncCanvasSize);
@@ -232,21 +273,43 @@ function HeroBlobEasterEgg() {
         window.cancelAnimationFrame(animationFrameRef.current);
       }
       particlesRef.current = [];
-      lastTimeRef.current = null;
+      canvas.dataset.lastTime = "";
       context.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
     };
   }, [exploded]);
 
   return (
-    <div className={`blob-stage ${exploded ? "is-exploded" : ""}`} ref={stageRef} aria-hidden="true">
+    <div className={`blob-stage ${exploded ? "is-exploded" : ""}`} ref={stageRef}>
       <canvas ref={canvasRef} className="blob-canvas"></canvas>
       {!exploded && (
         <button
           type="button"
+          ref={buttonRef}
           className="blob-button"
           aria-label="Secret bouncing ball easter egg"
           title="Try clicking the bouncing ball"
-          onClick={() => setExploded(true)}
+          onClick={() => {
+            setExploded(true);
+            const blob = blobRef.current;
+            const centerX = blob.x + blob.radius;
+            const centerY = blob.y + blob.radius;
+            const particleCount = 24;
+
+            particlesRef.current = Array.from({ length: particleCount }, () => {
+              const angle = Math.random() * Math.PI * 2;
+              const speed = 140 + Math.random() * 200;
+              const radius = 10 + Math.random() * 18;
+
+              return {
+                x: centerX + (Math.random() - 0.5) * 18,
+                y: centerY + (Math.random() - 0.5) * 18,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed - 120,
+                radius,
+                settled: false,
+              };
+            });
+          }}
         ></button>
       )}
     </div>
