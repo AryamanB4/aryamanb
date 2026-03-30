@@ -87,7 +87,7 @@ function HeroBlobEasterEgg() {
     y: 0,
     vx: 170,
     vy: 125,
-    radius: 160,
+    radius: 178,
     driftTimer: 0,
   });
   const [exploded, setExploded] = useState(false);
@@ -126,7 +126,7 @@ function HeroBlobEasterEgg() {
         return;
       }
       const blob = blobRef.current;
-      const hitPadding = 28;
+      const hitPadding = 52;
       button.style.transform = `translate(${blob.x - hitPadding}px, ${blob.y - hitPadding}px)`;
       button.style.width = `${blob.radius * 2 + hitPadding * 2}px`;
       button.style.height = `${blob.radius * 2 + hitPadding * 2}px`;
@@ -208,7 +208,7 @@ function HeroBlobEasterEgg() {
         positionBlobButton();
       }
 
-      const gravity = 860;
+      const gravity = 760;
 
       for (const particle of particlesRef.current) {
         if (particle.settled) {
@@ -221,24 +221,24 @@ function HeroBlobEasterEgg() {
 
         if (particle.x - particle.radius <= 0) {
           particle.x = particle.radius;
-          particle.vx = Math.abs(particle.vx) * 0.78;
+          particle.vx = Math.abs(particle.vx) * 0.86;
         } else if (particle.x + particle.radius >= width) {
           particle.x = width - particle.radius;
-          particle.vx = -Math.abs(particle.vx) * 0.78;
+          particle.vx = -Math.abs(particle.vx) * 0.86;
         }
 
         if (particle.y - particle.radius <= 0) {
           particle.y = particle.radius;
-          particle.vy = Math.abs(particle.vy) * 0.72;
+          particle.vy = Math.abs(particle.vy) * 0.8;
         } else if (particle.y + particle.radius >= height) {
           particle.y = height - particle.radius;
-          particle.vy = -Math.abs(particle.vy) * 0.42;
-          particle.vx *= 0.9;
+          particle.vy = -Math.abs(particle.vy) * 0.6;
+          particle.vx *= 0.96;
 
-          if (Math.abs(particle.vy) < 18) {
+          if (Math.abs(particle.vy) < 14) {
             particle.vy = 0;
           }
-          if (Math.abs(particle.vx) < 8) {
+          if (Math.abs(particle.vx) < 5) {
             particle.vx = 0;
           }
           if (particle.vy === 0 && particle.vx === 0) {
@@ -253,7 +253,7 @@ function HeroBlobEasterEgg() {
     };
 
     syncCanvasSize();
-    const initialRadius = Math.max(Math.min(stage.clientWidth, 360) * 0.38, 150);
+    const initialRadius = Math.max(Math.min(stage.clientWidth, 390) * 0.42, 170);
     blobRef.current = {
       x: Math.max(stage.clientWidth * 0.08, 0),
       y: Math.max(stage.clientHeight * 0.08, 0),
@@ -296,18 +296,18 @@ function HeroBlobEasterEgg() {
             const blob = blobRef.current;
             const centerX = blob.x + blob.radius;
             const centerY = blob.y + blob.radius;
-            const particleCount = 24;
+            const particleCount = 36;
 
             particlesRef.current = Array.from({ length: particleCount }, () => {
               const angle = Math.random() * Math.PI * 2;
-              const speed = 140 + Math.random() * 200;
-              const radius = 10 + Math.random() * 18;
+              const speed = 220 + Math.random() * 260;
+              const radius = 9 + Math.random() * 16;
 
               return {
-                x: centerX + (Math.random() - 0.5) * 18,
-                y: centerY + (Math.random() - 0.5) * 18,
+                x: centerX + (Math.random() - 0.5) * 24,
+                y: centerY + (Math.random() - 0.5) * 24,
                 vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed - 120,
+                vy: Math.sin(angle) * speed - 180,
                 radius,
                 settled: false,
               };
