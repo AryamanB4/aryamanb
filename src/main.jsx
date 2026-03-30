@@ -81,6 +81,7 @@ function HeroBlobEasterEgg() {
   const buttonRef = useRef(null);
   const animationFrameRef = useRef(null);
   const particlesRef = useRef([]);
+  const explodedRef = useRef(false);
   const blobRef = useRef({
     x: 0,
     y: 0,
@@ -94,7 +95,6 @@ function HeroBlobEasterEgg() {
   useEffect(() => {
     const stage = stageRef.current;
     const canvas = canvasRef.current;
-    const button = buttonRef.current;
     if (!stage || !canvas) {
       return undefined;
     }
@@ -121,13 +121,15 @@ function HeroBlobEasterEgg() {
     };
 
     const positionBlobButton = () => {
+      const button = buttonRef.current;
       if (!button) {
         return;
       }
       const blob = blobRef.current;
-      button.style.transform = `translate(${blob.x}px, ${blob.y}px)`;
-      button.style.width = `${blob.radius * 2}px`;
-      button.style.height = `${blob.radius * 2}px`;
+      const hitPadding = 28;
+      button.style.transform = `translate(${blob.x - hitPadding}px, ${blob.y - hitPadding}px)`;
+      button.style.width = `${blob.radius * 2 + hitPadding * 2}px`;
+      button.style.height = `${blob.radius * 2 + hitPadding * 2}px`;
     };
 
     const drawBlobParticle = (x, y, radius, alpha = 0.6) => {
@@ -172,7 +174,7 @@ function HeroBlobEasterEgg() {
       const delta = Math.min((timestamp - lastTime) / 1000, 0.032);
       canvas.dataset.lastTime = String(timestamp);
 
-      if (!exploded && button) {
+      if (!explodedRef.current) {
         const blob = blobRef.current;
         const maxX = Math.max(width - blob.radius * 2, 0);
         const maxY = Math.max(height - blob.radius * 2, 0);
@@ -251,7 +253,7 @@ function HeroBlobEasterEgg() {
     };
 
     syncCanvasSize();
-    const initialRadius = Math.max(Math.min(stage.clientWidth, 320) * 0.32, 120);
+    const initialRadius = Math.max(Math.min(stage.clientWidth, 360) * 0.38, 150);
     blobRef.current = {
       x: Math.max(stage.clientWidth * 0.08, 0),
       y: Math.max(stage.clientHeight * 0.08, 0),
@@ -276,7 +278,7 @@ function HeroBlobEasterEgg() {
       canvas.dataset.lastTime = "";
       context.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
     };
-  }, [exploded]);
+  }, []);
 
   return (
     <div className={`blob-stage ${exploded ? "is-exploded" : ""}`} ref={stageRef}>
@@ -289,6 +291,7 @@ function HeroBlobEasterEgg() {
           aria-label="Secret bouncing ball easter egg"
           title="Try clicking the bouncing ball"
           onClick={() => {
+            explodedRef.current = true;
             setExploded(true);
             const blob = blobRef.current;
             const centerX = blob.x + blob.radius;
