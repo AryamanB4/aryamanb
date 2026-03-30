@@ -149,23 +149,54 @@ nav a:hover{
 }
 
 /* BIG bouncing blob */
-.blob{
+.blob-stage{
   position: absolute;
   top: -120px;
   left: -120px;
   width: 520px;
   height: 520px;
+  z-index: 0;
+}
+
+.blob-canvas{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.blob-button{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
   border-radius: 888px;
   background: radial-gradient(circle at 30% 30%, rgba(96,165,250,0.7), rgba(37,99,235,0.35));
   filter: blur(14px);
   opacity: 0.6;
-  pointer-events: none;
-  z-index: 0;
+  cursor: pointer;
   animation: blob-bounce 15s linear infinite;
+  transition: opacity .22s ease;
+}
+
+.blob-button:hover{
+  opacity: 0.75;
+}
+
+.blob-button:focus-visible{
+  outline: 2px solid rgba(191,219,254,0.9);
+  outline-offset: 8px;
+}
+
+.blob-stage.is-exploded .blob-button{
+  opacity: 0;
 }
 
 /* Keep content above blob */
-.hero-main > *:not(.blob){
+.hero-main > *:not(.blob-stage){
   position: relative;
   z-index: 1;
 }
@@ -623,7 +654,7 @@ footer{
   .wrap{ padding: 14px; }
   .experience-section-title h2{ font-size: 34px; }
 
-  .blob{
+  .blob-stage{
     width: 420px;
     height: 420px;
     inset: auto -120px -140px auto;

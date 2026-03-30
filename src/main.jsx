@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "../styles.css";
 
@@ -71,6 +71,184 @@ function Nav({ currentRoute, darkMode, onToggleDarkMode }) {
           </nav>
         </div>
       </div>
+    </div>
+  );
+}
+
+function HeroBlobEasterEgg() {
+  const stageRef = useRef(null);
+  const canvasRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const particlesRef = useRef([]);
+  const lastTimeRef = useRef(null);
+  const [exploded, setExploded] = useState(false);
+
+  useEffect(() => {
+    if (!exploded) {
+      return undefined;
+    }
+
+    const stage = stageRef.current;
+    const canvas = canvasRef.current;
+    if (!stage || !canvas) {
+      return undefined;
+    }
+
+    const context = canvas.getContext("2d");
+    if (!context) {
+      return undefined;
+    }
+
+    const syncCanvasSize = () => {
+      const rect = stage.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const spawnParticles = () => {
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const particleCount = 24;
+
+      particlesRef.current = Array.from({ length: particleCount }, (_, index) => {
+        const angle = (Math.PI * 2 * index) / particleCount + (Math.random() - 0.5) * 0.35;
+        const speed = 180 + Math.random() * 180;
+        const radius = 6 + Math.random() * 10;
+
+        return {
+          x: centerX + (Math.random() - 0.5) * 10,
+          y: centerY + (Math.random() - 0.5) * 10,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 80,
+          radius,
+          settled: false,
+          color: index % 3 === 0 ? "rgba(147, 197, 253, 0.95)" : index % 3 === 1 ? "rgba(96, 165, 250, 0.92)" : "rgba(59, 130, 246, 0.9)",
+        };
+      });
+    };
+
+    const drawParticles = () => {
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+      context.clearRect(0, 0, width, height);
+
+      for (const particle of particlesRef.current) {
+        const gradient = context.createRadialGradient(
+          particle.x - particle.radius * 0.35,
+          particle.y - particle.radius * 0.35,
+          particle.radius * 0.15,
+          particle.x,
+          particle.y,
+          particle.radius
+        );
+        gradient.addColorStop(0, "rgba(255,255,255,0.95)");
+        gradient.addColorStop(0.35, particle.color);
+        gradient.addColorStop(1, "rgba(37, 99, 235, 0.18)");
+
+        context.beginPath();
+        context.fillStyle = gradient;
+        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        context.fill();
+      }
+    };
+
+    const step = (timestamp) => {
+      if (!lastTimeRef.current) {
+        lastTimeRef.current = timestamp;
+      }
+
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+      const delta = Math.min((timestamp - lastTimeRef.current) / 1000, 0.032);
+      lastTimeRef.current = timestamp;
+      const gravity = 720;
+      let movingParticles = 0;
+
+      for (const particle of particlesRef.current) {
+        if (particle.settled) {
+          continue;
+        }
+
+        particle.vy += gravity * delta;
+        particle.x += particle.vx * delta;
+        particle.y += particle.vy * delta;
+
+        if (particle.x - particle.radius <= 0) {
+          particle.x = particle.radius;
+          particle.vx = Math.abs(particle.vx) * 0.78;
+        } else if (particle.x + particle.radius >= width) {
+          particle.x = width - particle.radius;
+          particle.vx = -Math.abs(particle.vx) * 0.78;
+        }
+
+        if (particle.y - particle.radius <= 0) {
+          particle.y = particle.radius;
+          particle.vy = Math.abs(particle.vy) * 0.72;
+        } else if (particle.y + particle.radius >= height) {
+          particle.y = height - particle.radius;
+          particle.vy = -Math.abs(particle.vy) * 0.52;
+          particle.vx *= 0.92;
+
+          if (Math.abs(particle.vy) < 24) {
+            particle.vy = 0;
+          }
+          if (Math.abs(particle.vx) < 10) {
+            particle.vx = 0;
+          }
+          if (particle.vy === 0 && particle.vx === 0) {
+            particle.settled = true;
+          }
+        }
+
+        if (!particle.settled) {
+          movingParticles += 1;
+        }
+      }
+
+      drawParticles();
+
+      if (movingParticles > 0) {
+        animationFrameRef.current = window.requestAnimationFrame(step);
+      }
+    };
+
+    syncCanvasSize();
+    spawnParticles();
+    drawParticles();
+    lastTimeRef.current = null;
+    animationFrameRef.current = window.requestAnimationFrame(step);
+
+    window.addEventListener("resize", syncCanvasSize);
+
+    return () => {
+      window.removeEventListener("resize", syncCanvasSize);
+      if (animationFrameRef.current) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+      particlesRef.current = [];
+      lastTimeRef.current = null;
+      context.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
+    };
+  }, [exploded]);
+
+  return (
+    <div className={`blob-stage ${exploded ? "is-exploded" : ""}`} ref={stageRef} aria-hidden="true">
+      <canvas ref={canvasRef} className="blob-canvas"></canvas>
+      {!exploded && (
+        <button
+          type="button"
+          className="blob-button"
+          aria-label="Secret bouncing ball easter egg"
+          title="Try clicking the bouncing ball"
+          onClick={() => setExploded(true)}
+        ></button>
+      )}
     </div>
   );
 }
@@ -233,7 +411,7 @@ function HomePage() {
     <div className="wrap hero">
       <div className="hero-grid">
         <div className="panel hero-main">
-          <div className="blob"></div>
+          <HeroBlobEasterEgg />
           <div className="kicker">Queen's Computing | Product/Tech | Leadership</div>
           <h1><span>Aryaman</span><span>Bhatia</span></h1>
           <p className="subtitle">
