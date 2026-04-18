@@ -620,10 +620,11 @@ function ExperiencePage() {
       <div className="grid">
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>Technical Support Intern - Tech Mahindra</h3>
+            <h3>Tech Mahindra</h3>
             <div className="meta">Dubai, UAE | Jun 2024 - Aug 2024</div>
           </summary>
           <ul className="bullets">
+            <li><strong>Role:</strong> Technical Support Intern</li>
             <li>Analyzed large datasets to spot performance gaps.</li>
             <li>Delivered insights to support efficiency improvements.</li>
           </ul>
@@ -631,10 +632,11 @@ function ExperiencePage() {
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>International Student Ambassador - Queen's University</h3>
+            <h3>Queen's University</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
           <ul className="bullets">
+            <li><strong>Role:</strong> International Student Ambassador</li>
             <li>Supported international students adapting to Queen's.</li>
             <li>Acted as a liaison to improve student services.</li>
           </ul>
@@ -642,10 +644,11 @@ function ExperiencePage() {
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>Co-Director of Logistics - QHacks</h3>
+            <h3>QHacks</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
           <ul className="bullets">
+            <li><strong>Roles:</strong> Co-Director of Logistics, Co-Chair</li>
             <li>Coordinated venues, vendors, and services for the event.</li>
             <li>Helped ensure smooth execution for 500+ participants.</li>
           </ul>
@@ -653,10 +656,11 @@ function ExperiencePage() {
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>Director of Research & Insight - QDAA</h3>
+            <h3>QDAA</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
           <ul className="bullets">
+            <li><strong>Role:</strong> Director of Research & Insight</li>
             <li>Led analysis of tech industry trends and insights.</li>
             <li>Published newsletters/social content for the community.</li>
           </ul>
@@ -664,10 +668,11 @@ function ExperiencePage() {
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>Project Manager - Merlin Neurotech</h3>
+            <h3>Merlin Neurotech</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Apr 2025</div>
           </summary>
           <ul className="bullets">
+            <li><strong>Role:</strong> Project Manager</li>
             <li>Managed timeline and team collaboration end-to-end.</li>
             <li>Built a neuroscience game using real-time EEG/EMG signals.</li>
           </ul>
@@ -675,10 +680,11 @@ function ExperiencePage() {
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>Events Coordinator - COMPSA</h3>
+            <h3>COMPSA</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
           <ul className="bullets">
+            <li><strong>Role:</strong> Events Coordinator</li>
             <li>Organized athletics events to engage students.</li>
             <li>Collaborated across portfolios on cross-functional events.</li>
           </ul>
@@ -686,10 +692,11 @@ function ExperiencePage() {
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>Co-Director of Technology - E-waste Alliance (NPO)</h3>
+            <h3>E-waste Alliance (NPO)</h3>
             <div className="meta">Dubai, UAE | Oct 2021 - Aug 2024</div>
           </summary>
           <ul className="bullets">
+            <li><strong>Role:</strong> Co-Director of Technology</li>
             <li>Improved efficiency/security with tools and IT policies.</li>
             <li>Streamlined communication and event management systems.</li>
           </ul>
