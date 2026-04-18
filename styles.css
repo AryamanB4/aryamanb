@@ -465,6 +465,22 @@ h1 span{
   margin-top: 6px;
 }
 
+.experience-role-group{
+  margin-top: 14px;
+}
+
+.experience-role-group + .experience-role-group{
+  padding-top: 14px;
+  border-top: 1px solid rgba(148,163,184,0.22);
+}
+
+.experience-role-group h4{
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+}
+
 .meta{
   color: rgba(71,85,105,0.90);
   font-size: 13px;
@@ -829,11 +845,16 @@ html[data-theme="dark"] .spoiler-toggle{
 html[data-theme="dark"] .card p,
 html[data-theme="dark"] .bullets li,
 html[data-theme="dark"] .mini h3,
+html[data-theme="dark"] .experience-role-group h4,
 html[data-theme="dark"] .card h3,
 html[data-theme="dark"] .section-title h2,
 html[data-theme="dark"] .links a,
 html[data-theme="dark"] .tag{
   color: #f3f6ff;
+}
+
+html[data-theme="dark"] .experience-role-group + .experience-role-group{
+  border-top-color: rgba(148,163,184,0.28);
 }
 
 html[data-theme="dark"] .mobile-review-panel{

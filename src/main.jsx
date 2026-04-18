@@ -623,11 +623,13 @@ function ExperiencePage() {
             <h3>Tech Mahindra</h3>
             <div className="meta">Dubai, UAE | Jun 2024 - Aug 2024</div>
           </summary>
-          <ul className="bullets">
-            <li><strong>Role:</strong> Technical Support Intern</li>
-            <li>Analyzed large datasets to spot performance gaps.</li>
-            <li>Delivered insights to support efficiency improvements.</li>
-          </ul>
+          <div className="experience-role-group">
+            <h4>Technical Support Intern</h4>
+            <ul className="bullets">
+              <li>Analyzed large datasets to spot performance gaps.</li>
+              <li>Delivered insights to support efficiency improvements.</li>
+            </ul>
+          </div>
         </details>
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
@@ -635,11 +637,13 @@ function ExperiencePage() {
             <h3>Queen's University</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
-          <ul className="bullets">
-            <li><strong>Role:</strong> International Student Ambassador</li>
-            <li>Supported international students adapting to Queen's.</li>
-            <li>Acted as a liaison to improve student services.</li>
-          </ul>
+          <div className="experience-role-group">
+            <h4>International Student Ambassador</h4>
+            <ul className="bullets">
+              <li>Supported international students adapting to Queen's.</li>
+              <li>Acted as a liaison to improve student services.</li>
+            </ul>
+          </div>
         </details>
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
@@ -647,23 +651,34 @@ function ExperiencePage() {
             <h3>QHacks</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
-          <ul className="bullets">
-            <li><strong>Roles:</strong> Co-Director of Logistics, Co-Chair</li>
-            <li>Coordinated venues, vendors, and services for the event.</li>
-            <li>Helped ensure smooth execution for 500+ participants.</li>
-          </ul>
+          <div className="experience-role-group">
+            <h4>Co-Chair</h4>
+            <ul className="bullets">
+              <li>Helped guide planning and execution across the organization team.</li>
+              <li>Supported high-level coordination to keep event operations aligned.</li>
+            </ul>
+          </div>
+          <div className="experience-role-group">
+            <h4>Co-Director of Logistics</h4>
+            <ul className="bullets">
+              <li>Coordinated venues, vendors, and services for the event.</li>
+              <li>Helped ensure smooth execution for 500+ participants.</li>
+            </ul>
+          </div>
         </details>
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>QDAA</h3>
+            <h3>Queen's Data Analytics Association</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
-          <ul className="bullets">
-            <li><strong>Role:</strong> Director of Research & Insight</li>
-            <li>Led analysis of tech industry trends and insights.</li>
-            <li>Published newsletters/social content for the community.</li>
-          </ul>
+          <div className="experience-role-group">
+            <h4>Director of Research & Insight</h4>
+            <ul className="bullets">
+              <li>Led analysis of tech industry trends and insights.</li>
+              <li>Published newsletters/social content for the community.</li>
+            </ul>
+          </div>
         </details>
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
@@ -671,23 +686,27 @@ function ExperiencePage() {
             <h3>Merlin Neurotech</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Apr 2025</div>
           </summary>
-          <ul className="bullets">
-            <li><strong>Role:</strong> Project Manager</li>
-            <li>Managed timeline and team collaboration end-to-end.</li>
-            <li>Built a neuroscience game using real-time EEG/EMG signals.</li>
-          </ul>
+          <div className="experience-role-group">
+            <h4>Project Manager</h4>
+            <ul className="bullets">
+              <li>Managed timeline and team collaboration end-to-end.</li>
+              <li>Built a neuroscience game using real-time EEG/EMG signals.</li>
+            </ul>
+          </div>
         </details>
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
-            <h3>COMPSA</h3>
+            <h3>Computing Students' Association</h3>
             <div className="meta">Kingston, ON | Sep 2024 - Present</div>
           </summary>
-          <ul className="bullets">
-            <li><strong>Role:</strong> Events Coordinator</li>
-            <li>Organized athletics events to engage students.</li>
-            <li>Collaborated across portfolios on cross-functional events.</li>
-          </ul>
+          <div className="experience-role-group">
+            <h4>Events Coordinator</h4>
+            <ul className="bullets">
+              <li>Organized athletics events to engage students.</li>
+              <li>Collaborated across portfolios on cross-functional events.</li>
+            </ul>
+          </div>
         </details>
 
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
@@ -695,11 +714,13 @@ function ExperiencePage() {
             <h3>E-waste Alliance (NPO)</h3>
             <div className="meta">Dubai, UAE | Oct 2021 - Aug 2024</div>
           </summary>
-          <ul className="bullets">
-            <li><strong>Role:</strong> Co-Director of Technology</li>
-            <li>Improved efficiency/security with tools and IT policies.</li>
-            <li>Streamlined communication and event management systems.</li>
-          </ul>
+          <div className="experience-role-group">
+            <h4>Co-Director of Technology</h4>
+            <ul className="bullets">
+              <li>Improved efficiency/security with tools and IT policies.</li>
+              <li>Streamlined communication and event management systems.</li>
+            </ul>
+          </div>
         </details>
 
         <div className="card">
