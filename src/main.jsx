@@ -478,12 +478,12 @@ function HomePage() {
       <div className="hero-grid">
         <div className="panel hero-main">
           <HeroBlobEasterEgg />
-          <div className="kicker">Queen's Computing | Product/Tech | Leadership</div>
+          <div className="kicker">Queen's Computing | Software Design | Full-stack Projects</div>
           <h1><span>Aryaman</span><span>Bhatia</span></h1>
           <p className="subtitle">
-            I'm a Queen's University Computing student majoring in Computer Science and specializing in Software Design.
-            I'm interested in creating practical projects that solve genuine problems, and I love working with people to
-            build something bigger than what one person could do alone. Other than school and my project, I'm also interested in-
+            I'm a Queen's University Computing student specializing in Software Design. I like building practical software
+            that makes messy workflows clearer, from CRM tools and operations dashboards to computer-vision products.
+            Outside of school and projects, I'm also interested in-
           </p>
 
           <ul className="bullets" style={{ marginTop: "10px" }}>
@@ -506,16 +506,21 @@ function HomePage() {
               <a href="mailto:aryaman.bhatia1@gmail.com">Email</a>
             </p>
             <div className="tags">
+              <span className="tag">Full-stack</span>
+              <span className="tag">Computer Vision</span>
               <span className="tag">Operations</span>
-              <span className="tag">Hackathons</span>
-              <span className="tag">Tech</span>
-              <span className="tag">Systems</span>
+              <span className="tag">Leadership</span>
             </div>
           </div>
 
           <div className="mini">
             <h3>Currently</h3>
-            <p>Co-Director of Logistics @ QHacks | Events Coordinator @ COMPSA | Director of Research & Insight @ QDAA</p>
+            <p>Software Engineer Intern @ Pinnacle IBP | Web Developer @ QUX | Co-Chair @ QHacks</p>
+          </div>
+
+          <div className="mini">
+            <h3>Skills</h3>
+            <p>Python, Java, C, JavaScript, TypeScript, SQL, Next.js, Tailwind CSS, JUnit, WordPress, Computer Vision, Git, Google Cloud Platform</p>
           </div>
 
           <div className="mini cta-mini">
@@ -620,14 +625,42 @@ function ExperiencePage() {
       <div className="grid">
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
+            <h3>Pinnacle IBP</h3>
+            <div className="meta">Dubai, UAE | Jun 2026 - Aug 2026</div>
+          </summary>
+          <div className="experience-role-group">
+            <h4>Software Engineer Intern</h4>
+            <ul className="bullets">
+              <li>Developed CRM software to centralize 100+ client records across 3+ workflows used by 5+ team members.</li>
+              <li>Tested existing solutions and restructured inefficient workflows to improve maintainability and support future features.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
+          <summary>
             <h3>Tech Mahindra</h3>
             <div className="meta">Dubai, UAE | Jun 2024 - Aug 2024</div>
           </summary>
           <div className="experience-role-group">
             <h4>Technical Support Intern</h4>
             <ul className="bullets">
-              <li>Analyzed large datasets to spot performance gaps.</li>
-              <li>Delivered insights to support efficiency improvements.</li>
+              <li>Analyzed 10,000+ performance records to identify bottlenecks and improve system response efficiency by 15%.</li>
+              <li>Troubleshot enterprise software with engineering teams to reduce issue-resolution time and speed up escalations.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
+          <summary>
+            <h3>Queen's UX Club (QUX)</h3>
+            <div className="meta">Kingston, ON | Jun 2026 - Present</div>
+          </summary>
+          <div className="experience-role-group">
+            <h4>Web Developer</h4>
+            <ul className="bullets">
+              <li>Maintain and enhance the QUX website to support events and digital initiatives across multiple portfolios.</li>
+              <li>Develop systems to centralize emails, contacts, and organizational data across club teams.</li>
             </ul>
           </div>
         </details>
@@ -635,13 +668,13 @@ function ExperiencePage() {
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
             <h3>Queen's University</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
+            <div className="meta">Kingston, ON | Apr 2025 - Present</div>
           </summary>
           <div className="experience-role-group">
-            <h4>International Student Ambassador</h4>
+            <h4>Lead International Student Ambassador</h4>
             <ul className="bullets">
-              <li>Supported international students adapting to Queen's.</li>
-              <li>Acted as a liaison to improve student services.</li>
+              <li>Lead mentorship, recruitment, and transition programming for 100+ international students.</li>
+              <li>Represent Queen's through campus tours, recruitment events, and international student programming.</li>
             </ul>
           </div>
         </details>
@@ -649,76 +682,13 @@ function ExperiencePage() {
         <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
           <summary>
             <h3>QHacks</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
+            <div className="meta">Kingston, ON | May 2025 - Present</div>
           </summary>
           <div className="experience-role-group">
             <h4>Co-Chair</h4>
             <ul className="bullets">
-              <li>Helped guide planning and execution across the organization team.</li>
-              <li>Supported high-level coordination to keep event operations aligned.</li>
-            </ul>
-          </div>
-          <div className="experience-role-group">
-            <h4>Co-Director of Logistics</h4>
-            <ul className="bullets">
-              <li>Coordinated venues, vendors, and services for the event.</li>
-              <li>Helped ensure smooth execution for 500+ participants.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Queen's Data Analytics Association</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Director of Research & Insight</h4>
-            <ul className="bullets">
-              <li>Led analysis of tech industry trends and insights.</li>
-              <li>Published newsletters/social content for the community.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Merlin Neurotech</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Apr 2025</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Project Manager</h4>
-            <ul className="bullets">
-              <li>Managed timeline and team collaboration end-to-end.</li>
-              <li>Built a neuroscience game using real-time EEG/EMG signals.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Computing Students' Association</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Events Coordinator</h4>
-            <ul className="bullets">
-              <li>Organized athletics events to engage students.</li>
-              <li>Collaborated across portfolios on cross-functional events.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>E-waste Alliance (NPO)</h3>
-            <div className="meta">Dubai, UAE | Oct 2021 - Aug 2024</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Co-Director of Technology</h4>
-            <ul className="bullets">
-              <li>Improved efficiency/security with tools and IT policies.</li>
-              <li>Streamlined communication and event management systems.</li>
+              <li>Coordinate 15+ vendors, 50+ volunteers, multiple venues, and 48-hour logistics for a 500+ participant hackathon.</li>
+              <li>Lead strategic planning across operations, partnerships, technology, and participant experience teams.</li>
             </ul>
           </div>
         </details>
@@ -765,62 +735,48 @@ function ProjectsPage() {
       <div className="grid">
         <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
           <summary>
-            <h3>MedQuick</h3>
-            <div className="meta">Healthcare workflow concept</div>
+            <h3>SwingIo</h3>
+            <div className="meta">Golf coaching platform</div>
           </summary>
           <p>
-            Simplifies hospital admin by condensing patient data into a secure QR code so check-in is faster and paperwork is reduced.
+            Golf coaching platform that uses computer-vision workflows to analyze live and recorded swing footage.
           </p>
           <ul className="bullets">
-            <li>Designed a quick patient info flow using QR-based transfer.</li>
-            <li>Focused on speed, privacy, and reducing bottlenecks.</li>
-          </ul>
-        </details>
-
-        <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
-          <summary>
-            <h3>Neurotech Game (EEG/EMG) - Merlin Neurotech</h3>
-            <div className="meta">Project management + real-time biosignals</div>
-          </summary>
-          <p>
-            Led a team building a neuroscience-driven game integrating real-time EEG and EMG data.
-          </p>
-          <ul className="bullets">
-            <li>Owned milestones, coordination, and delivery timeline.</li>
-            <li>Bridged dev + research collaboration.</li>
-          </ul>
-        </details>
-
-        <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
-          <summary>
-            <h3>Tech Industry Insights - QDAA</h3>
-            <div className="meta">Analysis + publishing</div>
-          </summary>
-          <p>
-            Led a team analyzing data trends in tech and publishing insights via newsletters and social posts.
-          </p>
-          <ul className="bullets">
-            <li>Turned trends into clear, shareable takeaways.</li>
-            <li>Built consistent content output for the community.</li>
+            <li>Generated automated swing feedback through swing-phase analysis and technique scoring.</li>
+            <li>Built motion-analysis and ball-tracking workflows that surface actionable improvement clips.</li>
           </ul>
         </details>
 
         <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
           <summary>
             <h3>DeepShield</h3>
-            <div className="meta">AI deepfake detection project</div>
+            <div className="meta">Anti-AI photo checker</div>
           </summary>
           <p>
-            Built DeepShield to detect manipulated media and improve trust in digital content through an accessible detection workflow.
+            Full-stack platform for signing, validating, and evaluating digital images so users can check image authenticity.
           </p>
           <ul className="bullets">
-            <li>Created during HackHer 2026 with a focus on practical, user-friendly verification.</li>
-            <li>Combined technical implementation with clear demo storytelling and delivery.</li>
+            <li>Built with Next.js, TypeScript, and Tailwind CSS for an accessible verification workflow.</li>
+            <li>Implemented SHA-256 hashing and signed PNG metadata verification, with AI-image detection as a fallback for unsigned files.</li>
           </ul>
           <div className="btnrow">
             <a className="btn" href="https://github.com/abdelrmobarak/hackher2026" target="_blank" rel="noreferrer">GitHub</a>
             <a className="btn" href="https://www.youtube.com/watch?v=qTgxovIvxF0&feature=youtu.be" target="_blank" rel="noreferrer">Demo</a>
           </div>
+        </details>
+
+        <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
+          <summary>
+            <h3>UniPulse</h3>
+            <div className="meta">Ambassador operations dashboard</div>
+          </summary>
+          <p>
+            Centralized dashboard for administrative workflows and team information supporting a global community of 50,000+ students.
+          </p>
+          <ul className="bullets">
+            <li>Improved ambassador operations by consolidating administrative workflows into one internal tool.</li>
+            <li>Streamlined payroll and recordkeeping across ambassador activity and operational records.</li>
+          </ul>
         </details>
       </div>
     </div>
