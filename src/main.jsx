@@ -693,6 +693,48 @@ function ExperiencePage() {
           </div>
         </details>
 
+        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
+          <summary>
+            <h3>Queen's Data Analytics Association</h3>
+            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
+          </summary>
+          <div className="experience-role-group">
+            <h4>Director of Research & Insight</h4>
+            <ul className="bullets">
+              <li>Led research into technology industry trends and turned findings into accessible community insights.</li>
+              <li>Published newsletter and social content to help students stay current on data, business, and tech topics.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
+          <summary>
+            <h3>Computing Students' Association</h3>
+            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
+          </summary>
+          <div className="experience-role-group">
+            <h4>Events Coordinator</h4>
+            <ul className="bullets">
+              <li>Organized student events and athletics programming to strengthen engagement across the computing community.</li>
+              <li>Collaborated across portfolios to plan cross-functional events and support smooth execution.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
+          <summary>
+            <h3>Merlin Neurotech</h3>
+            <div className="meta">Kingston, ON | Sep 2024 - Apr 2025</div>
+          </summary>
+          <div className="experience-role-group">
+            <h4>Project Manager</h4>
+            <ul className="bullets">
+              <li>Managed milestones, team coordination, and delivery planning for a neuroscience-focused student project.</li>
+              <li>Supported development of a game concept using real-time EEG and EMG biosignal inputs.</li>
+            </ul>
+          </div>
+        </details>
+
         <div className="card">
           <h3>Contact</h3>
           <div className="meta">let's connect</div>
