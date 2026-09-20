@@ -1,907 +1,241 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "../styles.css";
 
 const ROUTES = {
-  home: {
-    hash: "#/",
-    title: "Aryaman Bhatia | Home",
-    label: "Home",
-  },
-  experience: {
-    hash: "#/experience",
-    title: "Aryaman Bhatia | Experience",
-    label: "Experience",
-  },
-  projects: {
-    hash: "#/projects",
-    title: "Aryaman Bhatia | Projects",
-    label: "Projects",
-  },
-  resume: {
-    hash: "#/resume",
-    title: "Aryaman Bhatia | Resume",
-    label: "Resume",
-  },
+  home: { hash: "#/", title: "Aryaman Bhatia", label: "About" },
+  experience: { hash: "#/experience", title: "Aryaman Bhatia | Experience", label: "Experience" },
+  projects: { hash: "#/projects", title: "Aryaman Bhatia | Projects", label: "Projects" },
+  tv: { hash: "#/tv", title: "Aryaman Bhatia | TV Rankings", label: "TV" },
+  resume: { hash: "#/resume", title: "Aryaman Bhatia | Resume", label: "Resume" },
 };
 
+const experiences = [
+  {
+    company: "Pinnacle IBP", role: "Software Engineer Intern", place: "Dubai, UAE", dates: "Jun 2026 - Aug 2026",
+    bullets: ["Developed CRM software to manage 100+ client records, building 3+ workflows used by a 5+ member team to organize client information and day-to-day operations.", "Tested existing CRM functionality and reworked inefficient workflows to simplify maintenance and support future feature development.", "Worked directly with business stakeholders to understand operational needs, turn them into CRM features, and prioritize improvements based on team requirements."],
+  },
+  {
+    company: "Tech Mahindra", role: "Technical Support Intern", place: "Dubai, UAE", dates: "Jun 2025 - Aug 2025",
+    bullets: ["Analyzed 10,000+ performance records to identify system bottlenecks and recurring issues, contributing to a 15% improvement in response efficiency.", "Troubleshot enterprise software issues alongside engineering teams and helped escalate technical problems for faster resolution.", "Reviewed recurring technical incidents to identify common support issues and highlight areas where internal processes could be improved."],
+  },
+  {
+    company: "QHacks", role: "Co-Chair", place: "Kingston, ON", dates: "May 2025 - Present", current: true,
+    bullets: ["Lead operations for a national hackathon with 500+ participants, coordinating 15+ vendors, 50+ volunteers, multiple venues, and logistics for the 48-hour event.", "Coordinate planning across operations, partnerships, technology, and participant experience teams to keep event preparation on schedule."],
+  },
+  {
+    company: "Queen's University School of Computing", role: "Teaching Assistant - CISC 204 Logic for Computing", place: "Kingston, ON", dates: "Sep 2026 - Present", current: true,
+    bullets: ["Support undergraduate students during tutorials by breaking down discrete mathematics and computing concepts and answering technical questions.", "Evaluate coursework and provide feedback on students' mathematical reasoning, problem-solving approaches, and technical accuracy."],
+  },
+  {
+    company: "Queen's University Vice-Provost Global Engagement Office", role: "Lead International Student Ambassador", place: "Kingston, ON", dates: "Apr 2025 - Present", current: true,
+    bullets: ["Lead mentorship, recruitment, and transition programming supporting 100+ international students as they prepare for and begin university.", "Represent Queen's at campus tours, recruitment events, and outreach programs while answering questions from prospective and incoming international students."],
+  },
+  {
+    company: "Queen's UX Club (QUX)", role: "Web Developer", place: "Kingston, ON", dates: "Jun 2026 - Present", current: true,
+    bullets: ["Maintain and improve the QUX website, keeping club resources accessible and supporting new digital initiatives as they are launched.", "Build internal tools that bring emails, contacts, and organizational information into one place for easier access across club teams."],
+  },
+];
+
+const projects = [
+  {
+    name: "SwingIO", type: "Golf coaching platform",
+    description: "A computer-vision golf coaching platform that analyzes live and recorded swings and turns movement into personalized feedback.",
+    bullets: ["Developed workflows that identify swing phases, score technique, and generate personalized feedback.", "Built motion-analysis and ball-tracking features that highlight areas for improvement and surface relevant coaching clips."],
+    stack: ["Computer Vision", "Motion Analysis", "Full-stack"],
+  },
+  {
+    name: "DeepShield", type: "Image authenticity",
+    description: "A full-stack image-authenticity platform for signing, validating, and evaluating digital images.",
+    bullets: ["Built the platform using Next.js, TypeScript, and Tailwind CSS.", "Implemented SHA-256 hashing and signed PNG metadata verification to detect pixel-level changes, alongside AI-image detection for unsigned files."],
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "SHA-256"],
+    links: [{ label: "GitHub", href: "https://github.com/abdelrmobarak/hackher2026" }, { label: "Demo", href: "https://drive.google.com/file/d/1hYpWCdb1xWgOdngYKJJe9UQjRfBu9vM4/view?usp=sharing" }],
+  },
+  {
+    name: "UniPulse", type: "Operations dashboard",
+    description: "A centralized dashboard for administrative workflows and team information supporting a global community of 50,000+ students.",
+    bullets: ["Consolidated administrative workflows into one internal tool.", "Streamlined payroll and recordkeeping across ambassador activity and operational records."],
+    stack: ["Dashboards", "Operations", "Data"],
+  },
+];
+
+const shows = [
+  { name: "Friends", review: "This is my comfort show and I can start it from literally any episode. It is always fun and easy to rewatch, no matter what mood I am in.", spoiler: "To end the debate for once and for all, Ross and Rachel were on a BREAK." },
+  { name: "Modern Family", review: "I love this show because the characters are so well written and every episode stays engaging. Watching the kids grow up while I was growing up too made it feel way more personal. It is one of those shows that is both funny and wholesome at the same time." },
+  { name: "How I Met Your Mother", review: "This is basically my friend group's favorite show. We are always quoting random lines from it in conversations. It just has that perfect mix of humor and moments that stick with you.", spoiler: "Tracy (the mom) being introduced so far late in the show and Ted going back to Robin in the final episode boils my blood every time." },
+  { name: "Suits", review: "Mike and Harvey are honestly a goated duo. Their chemistry and the pace of the show make every episode fun to watch. It almost made me want to go into law for a minute.", spoiler: "Once Mike and Rachel leave, the show kind of starts going down from there." },
+  { name: "Brooklyn Nine-Nine", review: "This was the first sitcom I ever watched, so it will always have a special place in my heart. The cast dynamic is so good, and the show never takes itself too seriously. The Halloween heist episodes are still some of my favorites." },
+  { name: "The Boys", review: "This is superhero TV done right. It is funny when it needs to be, but it also has a really strong story underneath. I like how it keeps surprising you while still being entertaining every episode." },
+  { name: "Invincible", review: "Another really well-written show that I genuinely enjoy. It brings out that childlike excitement in me, but it still has depth and serious moments. Definitely one of my favorite animated shows right now." },
+  { name: "The Office", review: "I still love this show and there are so many iconic moments in it.", spoiler: "Once Michael leaves, I usually stop watching in my rewatches. Still an enjoyable show, but it was goated in the earlier ones." },
+  { name: "The Rookie", review: "I have not watched past season 6 yet, but I still really like the show. The characters and pacing make it easy to keep watching.", spoiler: "Jackson's death was lowkey traumatic, I loved that character." },
+  { name: "Blood of Zeus", review: "Such a well-written anime, especially if you like Greek mythology. I like how it blends mythological themes with strong character arcs and action. It is one of the more underrated animated series for me." },
+];
+
 function normalizeRoute(hash) {
-  if (hash === ROUTES.experience.hash) {
-    return "experience";
-  }
-  if (hash === ROUTES.projects.hash) {
-    return "projects";
-  }
-  if (hash === ROUTES.resume.hash) {
-    return "resume";
-  }
-  return "home";
+  const key = hash?.replace("#/", "");
+  return Object.prototype.hasOwnProperty.call(ROUTES, key) ? key : "home";
 }
 
-function Nav({ currentRoute, darkMode, onToggleDarkMode }) {
-  const navItems = ["home", "experience", "projects", "resume"];
+function Arrow({ diagonal = false }) {
+  return <span aria-hidden="true" className="arrow">{diagonal ? "↗" : "→"}</span>;
+}
 
+function Header({ currentRoute, darkMode, onToggleDarkMode }) {
   return (
-    <div className="topbar">
-      <div className="topbar-inner">
-        <div className="brand"><span className="dot"></span> Aryaman Bhatia</div>
-        <div className="top-actions">
-          <button
-            type="button"
-            className="mode-toggle"
-            onClick={onToggleDarkMode}
-            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-            title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            <span aria-hidden="true">{darkMode ? "☀" : "☾"}</span>
-          </button>
-          <nav>
-            {navItems.map((key) => {
-              const route = ROUTES[key];
-              return (
-                <a
-                  key={key}
-                  href={route.hash}
-                  style={currentRoute === key ? { background: "rgba(37,99,235,0.14)", borderColor: "rgba(37,99,235,0.34)", color: darkMode ? "#eaf0ff" : "rgba(15,23,42,1)" } : undefined}
-                >
-                  {route.label}
-                </a>
-              );
-            })}
+    <header className="site-header">
+      <div className="header-inner">
+        <a className="wordmark" href="#/" aria-label="Aryaman Bhatia, home"><span className="wordmark-mark">AB</span><span>Aryaman Bhatia</span></a>
+        <div className="header-actions">
+          <nav aria-label="Primary navigation">
+            {Object.entries(ROUTES).map(([key, route]) => <a key={key} href={route.hash} aria-current={currentRoute === key ? "page" : undefined}>{route.label}</a>)}
           </nav>
+          <button className="theme-toggle" type="button" onClick={onToggleDarkMode} aria-label="Toggle colour theme">{darkMode ? "Light" : "Dark"}</button>
         </div>
       </div>
+    </header>
+  );
+}
+
+function SectionHeading({ title, count }) {
+  return <div className="section-heading"><h2>{title}{count !== undefined && <sup>{count}</sup>}</h2></div>;
+}
+
+function ExperienceList({ items = experiences }) {
+  const [openRow, setOpenRow] = useState(null);
+  const toggleRow = (key) => setOpenRow((current) => current === key ? null : key);
+
+  return (
+    <div className="index-list">
+      {items.map((item) => {
+        const key = `${item.company}-${item.role}`;
+        const isOpen = openRow === key;
+        return (
+        <div className={`index-row ${isOpen ? "is-open" : ""}`} key={key}>
+          <button className="row-summary" type="button" aria-expanded={isOpen} onClick={() => toggleRow(key)}>
+            <span className={`status-dot ${item.current ? "is-current" : ""}`} aria-hidden="true" />
+            <span className="row-main"><strong>{item.company}</strong><span className="row-separator">·</span><span>{item.role}</span></span>
+            <span className="row-date">{item.dates}</span>
+            <span className="expand-icon" aria-hidden="true" />
+          </button>
+          <div className="detail-shell" aria-hidden={!isOpen}><div className="row-detail"><p className="row-location">{item.place}</p><ul>{item.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul></div></div>
+        </div>
+      )})}
     </div>
   );
 }
 
-function HeroBlobEasterEgg() {
-  const stageRef = useRef(null);
-  const canvasRef = useRef(null);
-  const buttonRef = useRef(null);
-  const animationFrameRef = useRef(null);
-  const particlesRef = useRef([]);
-  const explodedRef = useRef(false);
-  const blobRef = useRef({
-    x: 0,
-    y: 0,
-    vx: 170,
-    vy: 125,
-    radius: 178,
-    driftTimer: 0,
-  });
-  const [exploded, setExploded] = useState(false);
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    const canvas = canvasRef.current;
-    if (!stage || !canvas) {
-      return undefined;
-    }
-
-    const context = canvas.getContext("2d");
-    if (!context) {
-      return undefined;
-    }
-
-    const syncCanvasSize = () => {
-      const rect = stage.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      canvas.style.width = `${rect.width}px`;
-      canvas.style.height = `${rect.height}px`;
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      const blob = blobRef.current;
-      const maxX = Math.max(rect.width - blob.radius * 2, 0);
-      const maxY = Math.max(rect.height - blob.radius * 2, 0);
-      blob.x = Math.min(blob.x, maxX);
-      blob.y = Math.min(blob.y, maxY);
-    };
-
-    const positionBlobButton = () => {
-      const button = buttonRef.current;
-      if (!button) {
-        return;
-      }
-      const blob = blobRef.current;
-      const hitPadding = 96;
-      button.style.transform = `translate(${blob.x - hitPadding}px, ${blob.y - hitPadding}px)`;
-      button.style.width = `${blob.radius * 2 + hitPadding * 2}px`;
-      button.style.height = `${blob.radius * 2 + hitPadding * 2}px`;
-    };
-
-    const drawBlobParticle = (x, y, radius, alpha = 0.6) => {
-      context.save();
-      context.globalAlpha = alpha;
-      context.filter = "blur(14px)";
-      const gradient = context.createRadialGradient(
-        x - radius * 0.35,
-        y - radius * 0.35,
-        radius * 0.12,
-        x,
-        y,
-        radius
-      );
-      gradient.addColorStop(0, "rgba(96,165,250,0.78)");
-      gradient.addColorStop(1, "rgba(37,99,235,0.38)");
-      context.fillStyle = gradient;
-      context.beginPath();
-      context.arc(x, y, radius, 0, Math.PI * 2);
-      context.fill();
-      context.restore();
-    };
-
-    const drawParticles = () => {
-      const width = stage.clientWidth;
-      const height = stage.clientHeight;
-      context.clearRect(0, 0, width, height);
-
-      for (const particle of particlesRef.current) {
-        drawBlobParticle(particle.x, particle.y, particle.radius);
-      }
-    };
-
-    const step = (timestamp) => {
-      if (!canvas.dataset.lastTime) {
-        canvas.dataset.lastTime = String(timestamp);
-      }
-
-      const width = stage.clientWidth;
-      const height = stage.clientHeight;
-      const lastTime = Number(canvas.dataset.lastTime);
-      const delta = Math.min((timestamp - lastTime) / 1000, 0.032);
-      canvas.dataset.lastTime = String(timestamp);
-
-      if (!explodedRef.current) {
-        const blob = blobRef.current;
-        const maxX = Math.max(width - blob.radius * 2, 0);
-        const maxY = Math.max(height - blob.radius * 2, 0);
-
-        blob.driftTimer -= delta;
-        if (blob.driftTimer <= 0) {
-          blob.vx += (Math.random() - 0.5) * 70;
-          blob.vy += (Math.random() - 0.5) * 70;
-          blob.driftTimer = 0.6 + Math.random() * 1.3;
-        }
-
-        blob.x += blob.vx * delta;
-        blob.y += blob.vy * delta;
-
-        if (blob.x <= 0) {
-          blob.x = 0;
-          blob.vx = 120 + Math.random() * 120;
-        } else if (blob.x >= maxX) {
-          blob.x = maxX;
-          blob.vx = -(120 + Math.random() * 120);
-        }
-
-        if (blob.y <= 0) {
-          blob.y = 0;
-          blob.vy = 100 + Math.random() * 120;
-        } else if (blob.y >= maxY) {
-          blob.y = maxY;
-          blob.vy = -(100 + Math.random() * 120);
-        }
-
-        positionBlobButton();
-      }
-
-      const gravity = 760;
-
-      for (const particle of particlesRef.current) {
-        if (particle.settled) {
-          continue;
-        }
-
-        particle.vy += gravity * delta;
-        particle.x += particle.vx * delta;
-        particle.y += particle.vy * delta;
-
-        if (particle.x - particle.radius <= 0) {
-          particle.x = particle.radius;
-          particle.vx = Math.abs(particle.vx) * 0.86;
-        } else if (particle.x + particle.radius >= width) {
-          particle.x = width - particle.radius;
-          particle.vx = -Math.abs(particle.vx) * 0.86;
-        }
-
-        if (particle.y - particle.radius <= 0) {
-          particle.y = particle.radius;
-          particle.vy = Math.abs(particle.vy) * 0.8;
-        } else if (particle.y + particle.radius >= height) {
-          particle.y = height - particle.radius;
-          particle.vy = -Math.abs(particle.vy) * 0.6;
-          particle.vx *= 0.96;
-
-          if (Math.abs(particle.vy) < 14) {
-            particle.vy = 0;
-          }
-          if (Math.abs(particle.vx) < 5) {
-            particle.vx = 0;
-          }
-          if (particle.vy === 0 && particle.vx === 0) {
-            particle.settled = true;
-          }
-        }
-
-      }
-
-      drawParticles();
-      animationFrameRef.current = window.requestAnimationFrame(step);
-    };
-
-    syncCanvasSize();
-    const initialRadius = Math.max(Math.min(stage.clientWidth, 390) * 0.42, 170);
-    blobRef.current = {
-      x: Math.max(stage.clientWidth * 0.08, 0),
-      y: Math.max(stage.clientHeight * 0.08, 0),
-      vx: 170,
-      vy: 125,
-      radius: initialRadius,
-      driftTimer: 0.8,
-    };
-    positionBlobButton();
-    drawParticles();
-    canvas.dataset.lastTime = "";
-    animationFrameRef.current = window.requestAnimationFrame(step);
-
-    window.addEventListener("resize", syncCanvasSize);
-
-    return () => {
-      window.removeEventListener("resize", syncCanvasSize);
-      if (animationFrameRef.current) {
-        window.cancelAnimationFrame(animationFrameRef.current);
-      }
-      particlesRef.current = [];
-      canvas.dataset.lastTime = "";
-      context.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
-    };
-  }, []);
+function ProjectList({ items = projects }) {
+  const [openRow, setOpenRow] = useState(null);
+  const toggleRow = (key) => setOpenRow((current) => current === key ? null : key);
 
   return (
-    <div className={`blob-stage ${exploded ? "is-exploded" : ""}`} ref={stageRef}>
-      <canvas ref={canvasRef} className="blob-canvas"></canvas>
-      {!exploded && (
-        <button
-          type="button"
-          ref={buttonRef}
-          className="blob-button"
-          aria-label="Secret bouncing ball easter egg"
-          title="Try clicking the bouncing ball"
-          onClick={() => {
-            explodedRef.current = true;
-            setExploded(true);
-            const blob = blobRef.current;
-            const centerX = blob.x + blob.radius;
-            const centerY = blob.y + blob.radius;
-            const particleCount = 36;
+    <div className="index-list project-list">
+      {items.map((project, index) => {
+        const isOpen = openRow === project.name;
+        return (
+        <div className={`index-row project-row ${isOpen ? "is-open" : ""}`} key={project.name}>
+          <button className="row-summary" type="button" aria-expanded={isOpen} onClick={() => toggleRow(project.name)}><span className="project-number">0{index + 1}</span><span className="row-main"><strong>{project.name}</strong><span>{project.type}</span></span><span className="expand-icon" aria-hidden="true" /></button>
+          <div className="detail-shell" aria-hidden={!isOpen}><div className="row-detail project-detail">
+            <p className="project-description">{project.description}</p>
+            <ul>{project.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+            <div className="tag-list">{project.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
+            {project.links && <div className="inline-links">{project.links.map((link) => <a key={link.label} href={link.href} target="_blank" rel="noreferrer">{link.label} <Arrow diagonal /></a>)}</div>}
+          </div></div>
+        </div>
+      )})}
+    </div>
+  );
+}
 
-            particlesRef.current = Array.from({ length: particleCount }, () => {
-              const angle = Math.random() * Math.PI * 2;
-              const speed = 220 + Math.random() * 260;
-              const radius = 9 + Math.random() * 16;
+function ShowList() {
+  const [openRow, setOpenRow] = useState(null);
+  const [revealedSpoilers, setRevealedSpoilers] = useState({});
+  const toggleRow = (key) => setOpenRow((current) => current === key ? null : key);
+  const spoilerShows = shows.filter((show) => show.spoiler);
+  const allSpoilersRevealed = spoilerShows.every((show) => revealedSpoilers[show.name]);
+  const revealAllSpoilers = () => setRevealedSpoilers(Object.fromEntries(spoilerShows.map((show) => [show.name, true])));
 
-              return {
-                x: centerX + (Math.random() - 0.5) * 24,
-                y: centerY + (Math.random() - 0.5) * 24,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed - 180,
-                radius,
-                settled: false,
-              };
-            });
-          }}
-        ></button>
-      )}
+  return (
+    <div className="show-panel">
+      <div className="spoiler-actions">
+        <button type="button" onClick={revealAllSpoilers} disabled={allSpoilersRevealed}>Reveal all spoilers</button>
+        <button type="button" onClick={() => setRevealedSpoilers({})} disabled={Object.keys(revealedSpoilers).length === 0}>Reblur spoilers</button>
+      </div>
+      <div className="show-list">
+      {shows.map(({ name, review, spoiler }, index) => {
+        const isOpen = openRow === name;
+        const spoilerRevealed = !!revealedSpoilers[name];
+        return (
+        <div className={`show-row ${isOpen ? "is-open" : ""}`} key={name}>
+          <button className="show-summary" type="button" aria-expanded={isOpen} onClick={() => toggleRow(name)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{name}</strong><span className="show-plus" /></button>
+          <div className="detail-shell" aria-hidden={!isOpen}><div className="show-review">
+            <p>{review}</p>
+            {spoiler && <div className={`spoiler-line ${spoilerRevealed ? "is-revealed" : ""}`}><span className="spoiler-copy">{spoiler}</span>{!spoilerRevealed && <button type="button" className="spoiler-reveal" onClick={() => setRevealedSpoilers((items) => ({ ...items, [name]: true }))}>Spoiler - click to reveal</button>}</div>}
+          </div></div>
+        </div>
+      )})}
+      </div>
     </div>
   );
 }
 
 function HomePage() {
-  const [allReviewsExpanded, setAllReviewsExpanded] = useState(false);
-  const [selectedMobileReview, setSelectedMobileReview] = useState(null);
-  const [revealedSpoilers, setRevealedSpoilers] = useState({});
-
-  const revealSpoiler = (id) => {
-    setRevealedSpoilers((prev) => ({ ...prev, [id]: true }));
-  };
-
-  const renderReview = (reviewParts) =>
-    reviewParts.map((part, index) => {
-      if (!part.spoiler) {
-        return (
-          <span key={`${part.id || "plain"}-${index}`}>
-            {part.text}{" "}
-          </span>
-        );
-      }
-
-      const isRevealed = !!revealedSpoilers[part.id];
-      return (
-        <span
-          key={part.id}
-          className={`spoiler-inline ${isRevealed ? "is-revealed" : ""}`}
-        >
-          <span className="spoiler-text">{part.text}</span>
-          {!isRevealed && (
-            <button
-              type="button"
-              className="spoiler-toggle"
-              onClick={() => revealSpoiler(part.id)}
-            >
-              Spoiler - Click to reveal
-            </button>
-          )}
-        </span>
-      );
-    });
-
-  const showRankings = [
-    {
-      id: "friends-review",
-      rank: 1,
-      show: "Friends",
-      reviewParts: [
-        { text: "This is my comfort show and I can start it from literally any episode. It is always fun and easy to rewatch, no matter what mood I am in." },
-        { id: "friends-spoiler-1", spoiler: true, text: "To end the debate for once and for all, Ross and Rachel were on a BREAK." },
-      ],
-    },
-    {
-      id: "modern-family-review",
-      rank: 2,
-      show: "Modern Family",
-      reviewParts: [
-        { text: "I love this show because the characters are so well written and every episode stays engaging. Watching the kids grow up while I was growing up too made it feel way more personal. It is one of those shows that is both funny and wholesome at the same time." },
-      ],
-    },
-    {
-      id: "himym-review",
-      rank: 3,
-      show: "How I Met Your Mother",
-      reviewParts: [
-        { text: "This is basically my friend group's favorite show. We are always quoting random lines from it in conversations. It just has that perfect mix of humor and moments that stick with you." },
-        { id: "himym-spoiler-1", spoiler: true, text: "Tracy (the mom) being introduced so far late in the show and Ted going back to Robin in the final episode boils my blood every time." },
-      ],
-    },
-    {
-      id: "suits-review",
-      rank: 4,
-      show: "Suits",
-      reviewParts: [
-        { text: "Mike and Harvey are honestly a goated duo. Their chemistry and the pace of the show make every episode fun to watch. It almost made me want to go into law for a minute." },
-        { id: "suits-spoiler-1", spoiler: true, text: "Once Mike and Rachel leave, the show kind of starts going down from there." },
-      ],
-    },
-    {
-      id: "b99-review",
-      rank: 5,
-      show: "Brooklyn Nine-Nine",
-      reviewParts: [
-        { text: "This was the first sitcom I ever watched, so it will always have a special place in my heart. The cast dynamic is so good, and the show never takes itself too seriously. The Halloween heist episodes are still some of my favorites." },
-      ],
-    },
-    {
-      id: "boys-review",
-      rank: 6,
-      show: "The Boys",
-      reviewParts: [
-        { text: "This is superhero TV done right. It is funny when it needs to be, but it also has a really strong story underneath. I like how it keeps surprising you while still being entertaining every episode." },
-      ],
-    },
-    {
-      id: "invincible-review",
-      rank: 7,
-      show: "Invincible",
-      reviewParts: [
-        { text: "Another really well-written show that I genuinely enjoy. It brings out that childlike excitement in me, but it still has depth and serious moments. Definitely one of my favorite animated shows right now." },
-      ],
-    },
-    {
-      id: "office-review",
-      rank: 8,
-      show: "The Office",
-      reviewParts: [
-        { text: "I still love this show and there are so many iconic moments in it." },
-        { id: "office-spoiler-1", spoiler: true, text: "Once Michael leaves, I usually stop watching in my rewatches. Still an enjoyable show, but it was goated in the earlier ones." },
-      ],
-    },
-    {
-      id: "rookie-review",
-      rank: 9,
-      show: "The Rookie",
-      reviewParts: [
-        { text: "I have not watched past season 6 yet, but I still really like the show. The characters and pacing make it easy to keep watching." },
-        { id: "rookie-spoiler-1", spoiler: true, text: "Jackson's death was lowkey traumatic, I loved that character." },
-      ],
-    },
-    {
-      id: "boz-review",
-      rank: 10,
-      show: "Blood of Zeus",
-      reviewParts: [
-        { text: "Such a well-written anime, especially if you like Greek mythology. I like how it blends mythological themes with strong character arcs and action. It is one of the more underrated animated series for me." },
-      ],
-    },
-  ];
-
-  const syncExpandedState = () => {
-    const details = Array.from(document.querySelectorAll(".review-dropdown"));
-    setAllReviewsExpanded(details.length > 0 && details.every((item) => item.open));
-  };
-
-  const toggleAllReviews = () => {
-    const nextState = !allReviewsExpanded;
-    document.querySelectorAll(".review-dropdown").forEach((item) => {
-      item.open = nextState;
-    });
-    setAllReviewsExpanded(nextState);
-  };
-
-  const hideAllSpoilers = () => {
-    setRevealedSpoilers({});
-  };
-
-  const toggleReviewFromShow = (id, show, reviewParts) => {
-    const detail = document.getElementById(id);
-    if (!detail) {
-      return;
-    }
-    detail.open = !detail.open;
-    syncExpandedState();
-    setSelectedMobileReview(detail.open ? { id, show, reviewParts } : null);
-  };
-
   return (
-    <div className="wrap hero">
-      <div className="hero-grid">
-        <div className="panel hero-main">
-          <HeroBlobEasterEgg />
-          <div className="kicker">Queen's Computing | Software Design | Full-stack Projects</div>
-          <h1><span>Aryaman</span><span>Bhatia</span></h1>
-          <p className="subtitle">
-            I'm a Queen's University Computing student specializing in Software Design. I like building practical software
-            that makes messy workflows clearer, from CRM tools and operations dashboards to computer-vision products.
-            Outside of school and projects, I'm also interested in-
-          </p>
-
-          <ul className="bullets" style={{ marginTop: "10px" }}>
-            <li>Consumer tech</li>
-            <li>Environmental change</li>
-            <li>Bingeing sitcoms</li>
-          </ul>
-
-          <p className="subtitle" style={{ marginTop: "10px" }}>
-            <strong>Feel free to reach out - always happy to talk!</strong>
-          </p>
+    <main className="home-page">
+      <section className="intro page-shell">
+        <div className="intro-title">
+          <h1>Aryaman Bhatia</h1>
+          <p className="intro-meta">Toronto / Kingston · Queen's University</p>
         </div>
-
-        <div className="panel side">
-          <div className="mini">
-            <h3>Links</h3>
-            <p>
-              <a href="https://www.linkedin.com/in/aryaman-bhatia-b78388372/" target="_blank" rel="noreferrer">LinkedIn</a> |
-              <a href="https://github.com/AryamanB4" target="_blank" rel="noreferrer">GitHub</a> |
-              <a href="mailto:aryaman.bhatia1@gmail.com">Email</a>
-            </p>
-            <div className="tags">
-              <span className="tag">Full-stack</span>
-              <span className="tag">Computer Vision</span>
-              <span className="tag">Operations</span>
-              <span className="tag">Leadership</span>
-            </div>
-          </div>
-
-          <div className="mini">
-            <h3>Currently</h3>
-            <p>Software Engineer Intern @ Pinnacle IBP | Web Developer @ QUX | Co-Chair @ QHacks</p>
-          </div>
-
-          <div className="mini">
-            <h3>Skills</h3>
-            <p>Python, Java, C, JavaScript, TypeScript, SQL, Next.js, Tailwind CSS, JUnit, WordPress, Computer Vision, Git, Google Cloud Platform</p>
-          </div>
-
-          <div className="mini cta-mini">
-            <h3>Explore</h3>
-            <div className="btnrow">
-              <a className="btn" href={ROUTES.experience.hash}>Experience</a>
-              <a className="btn" href={ROUTES.projects.hash}>Projects</a>
-              <a className="btn" href={ROUTES.resume.hash}>Resume</a>
-              <a className="btn" href="mailto:aryaman.bhatia1@gmail.com">Email</a>
-            </div>
-          </div>
+        <div className="intro-copy">
+          <p>Hi, I'm <strong>Aryaman Bhatia</strong>, a Computer Science student at <strong className="queens-wordmark"><span className="queens-blue">Queen's </span><span className="queens-gold">U</span><span className="queens-red">niversity</span></strong> specializing in <strong>Software Design</strong>. I enjoy building and optimizing solutions to real-world problems to create <strong>meaningful impact</strong>.</p>
+          <p>Outside of coding, I explore <strong>new technologies</strong> and train for <strong className="sport golf">golf</strong> and <strong className="sport badminton">badminton</strong>.</p>
+          <div className="contact-line"><a href="https://www.linkedin.com/in/aryaman-bhatia-b78388372/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/AryamanB4" target="_blank" rel="noreferrer">GitHub</a></div>
         </div>
-      </div>
-
-      <section>
-        <div className="section-title home-section-title">
-          <h2>TV Show Ranking</h2>
-          <div className="review-actions">
-            <button type="button" className="review-toggle-all" onClick={toggleAllReviews}>
-              {allReviewsExpanded ? "Collapse All" : "Expand All"}
-            </button>
-            <button
-              type="button"
-              className="review-toggle-all"
-              onClick={hideAllSpoilers}
-              disabled={Object.keys(revealedSpoilers).length === 0}
-            >
-              Hide Spoilers
-            </button>
-          </div>
-        </div>
-
-        <div className="table-wrap">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Show</th>
-                <th>Review</th>
-              </tr>
-            </thead>
-            <tbody>
-              {showRankings.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.rank}</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="show-review-trigger"
-                      onClick={() => toggleReviewFromShow(item.id, item.show, item.reviewParts)}
-                    >
-                      {item.show}
-                    </button>
-                  </td>
-                  <td>
-                    <details id={item.id} className="review-dropdown" onToggle={syncExpandedState}>
-                      <summary>Read review</summary>
-                      <p>{renderReview(item.reviewParts)}</p>
-                    </details>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {selectedMobileReview && (
-          <div className="mobile-review-panel">
-            <h3>{selectedMobileReview.show}</h3>
-            <p>{renderReview(selectedMobileReview.reviewParts)}</p>
-          </div>
-        )}
       </section>
-    </div>
+      <div className="page-shell content-stack">
+        <section id="experience"><SectionHeading title="Experience" count={experiences.length} /><ExperienceList /></section>
+        <section id="projects"><SectionHeading title="Projects" count={projects.length} /><ProjectList /></section>
+      </div>
+    </main>
   );
 }
 
-function ExperiencePage() {
-  const [allExperienceExpanded, setAllExperienceExpanded] = useState(false);
-
-  const syncExperienceExpandedState = () => {
-    const details = Array.from(document.querySelectorAll(".experience-dropdown"));
-    setAllExperienceExpanded(details.length > 0 && details.every((item) => item.open));
-  };
-
-  const toggleAllExperience = () => {
-    const nextState = !allExperienceExpanded;
-    document.querySelectorAll(".experience-dropdown").forEach((item) => {
-      item.open = nextState;
-    });
-    setAllExperienceExpanded(nextState);
-  };
-
-  return (
-    <div className="wrap">
-      <div className="section-title experience-section-title">
-        <h2>Experience</h2>
-        <button type="button" className="review-toggle-all" onClick={toggleAllExperience}>
-          {allExperienceExpanded ? "Collapse All" : "Expand All"}
-        </button>
-      </div>
-
-      <div className="grid">
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Pinnacle IBP</h3>
-            <div className="meta">Dubai, UAE | Jun 2026 - Aug 2026</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Software Engineer Intern</h4>
-            <ul className="bullets">
-              <li>Developed CRM software to centralize 100+ client records across 3+ workflows used by 5+ team members.</li>
-              <li>Tested existing solutions and restructured inefficient workflows to improve maintainability and support future features.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Tech Mahindra</h3>
-            <div className="meta">Dubai, UAE | Jun 2024 - Aug 2024</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Technical Support Intern</h4>
-            <ul className="bullets">
-              <li>Analyzed 10,000+ performance records to identify bottlenecks and improve system response efficiency by 15%.</li>
-              <li>Troubleshot enterprise software with engineering teams to reduce issue-resolution time and speed up escalations.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Queen's UX Club (QUX)</h3>
-            <div className="meta">Kingston, ON | Jun 2026 - Present</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Web Developer</h4>
-            <ul className="bullets">
-              <li>Maintain and enhance the QUX website to support events and digital initiatives across multiple portfolios.</li>
-              <li>Develop systems to centralize emails, contacts, and organizational data across club teams.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Queen's University</h3>
-            <div className="meta">Kingston, ON | Apr 2025 - Present</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Lead International Student Ambassador</h4>
-            <ul className="bullets">
-              <li>Lead mentorship, recruitment, and transition programming for 100+ international students.</li>
-              <li>Represent Queen's through campus tours, recruitment events, and international student programming.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>QHacks</h3>
-            <div className="meta">Kingston, ON | May 2025 - Present</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Co-Chair</h4>
-            <ul className="bullets">
-              <li>Coordinate 15+ vendors, 50+ volunteers, multiple venues, and 48-hour logistics for a 500+ participant hackathon.</li>
-              <li>Lead strategic planning across operations, partnerships, technology, and participant experience teams.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Queen's Data Analytics Association</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Director of Research & Insight</h4>
-            <ul className="bullets">
-              <li>Led research into technology industry trends and turned findings into accessible community insights.</li>
-              <li>Published newsletter and social content to help students stay current on data, business, and tech topics.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Computing Students' Association</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Present</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Events Coordinator</h4>
-            <ul className="bullets">
-              <li>Organized student events and athletics programming to strengthen engagement across the computing community.</li>
-              <li>Collaborated across portfolios to plan cross-functional events and support smooth execution.</li>
-            </ul>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown" onToggle={syncExperienceExpandedState}>
-          <summary>
-            <h3>Merlin Neurotech</h3>
-            <div className="meta">Kingston, ON | Sep 2024 - Apr 2025</div>
-          </summary>
-          <div className="experience-role-group">
-            <h4>Project Manager</h4>
-            <ul className="bullets">
-              <li>Managed milestones, team coordination, and delivery planning for a neuroscience-focused student project.</li>
-              <li>Supported development of a game concept using real-time EEG and EMG biosignal inputs.</li>
-            </ul>
-          </div>
-        </details>
-
-        <div className="card">
-          <h3>Contact</h3>
-          <div className="meta">let's connect</div>
-          <div className="links">
-            <a href="mailto:aryaman.bhatia1@gmail.com">Email</a>
-            <a href="https://www.linkedin.com/in/aryaman-bhatia-b78388372/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href={ROUTES.projects.hash}>Projects</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProjectsPage() {
-  const [allProjectsExpanded, setAllProjectsExpanded] = useState(false);
-
-  const syncProjectsExpandedState = () => {
-    const details = Array.from(document.querySelectorAll(".project-dropdown"));
-    setAllProjectsExpanded(details.length > 0 && details.every((item) => item.open));
-  };
-
-  const toggleAllProjects = () => {
-    const nextState = !allProjectsExpanded;
-    document.querySelectorAll(".project-dropdown").forEach((item) => {
-      item.open = nextState;
-    });
-    setAllProjectsExpanded(nextState);
-  };
-
-  return (
-    <div className="wrap">
-      <div className="section-title experience-section-title">
-        <h2>Projects</h2>
-        <button type="button" className="review-toggle-all" onClick={toggleAllProjects}>
-          {allProjectsExpanded ? "Collapse All" : "Expand All"}
-        </button>
-      </div>
-
-      <div className="grid">
-        <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
-          <summary>
-            <h3>SwingIo</h3>
-            <div className="meta">Golf coaching platform</div>
-          </summary>
-          <p>
-            Golf coaching platform that uses computer-vision workflows to analyze live and recorded swing footage.
-          </p>
-          <ul className="bullets">
-            <li>Generated automated swing feedback through swing-phase analysis and technique scoring.</li>
-            <li>Built motion-analysis and ball-tracking workflows that surface actionable improvement clips.</li>
-          </ul>
-        </details>
-
-        <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
-          <summary>
-            <h3>DeepShield</h3>
-            <div className="meta">Anti-AI photo checker</div>
-          </summary>
-          <p>
-            Full-stack platform for signing, validating, and evaluating digital images so users can check image authenticity.
-          </p>
-          <ul className="bullets">
-            <li>Built with Next.js, TypeScript, and Tailwind CSS for an accessible verification workflow.</li>
-            <li>Implemented SHA-256 hashing and signed PNG metadata verification, with AI-image detection as a fallback for unsigned files.</li>
-          </ul>
-          <div className="btnrow">
-            <a className="btn" href="https://github.com/abdelrmobarak/hackher2026" target="_blank" rel="noreferrer">GitHub</a>
-            <a className="btn" href="https://www.youtube.com/watch?v=qTgxovIvxF0&feature=youtu.be" target="_blank" rel="noreferrer">Demo</a>
-          </div>
-        </details>
-
-        <details className="card experience-dropdown project-dropdown" onToggle={syncProjectsExpandedState}>
-          <summary>
-            <h3>UniPulse</h3>
-            <div className="meta">Ambassador operations dashboard</div>
-          </summary>
-          <p>
-            Centralized dashboard for administrative workflows and team information supporting a global community of 50,000+ students.
-          </p>
-          <ul className="bullets">
-            <li>Improved ambassador operations by consolidating administrative workflows into one internal tool.</li>
-            <li>Streamlined payroll and recordkeeping across ambassador activity and operational records.</li>
-          </ul>
-        </details>
-      </div>
-    </div>
-  );
+function TvPage() {
+  return <main className="page-shell subpage"><div className="page-intro"><h1>TV ranking<sup>{shows.length}</sup></h1><p>My completely subjective list. Open a title for the take.</p></div><ShowList /></main>;
 }
 
 function ResumePage() {
-  return (
-    <div className="wrap">
-      <div className="section-title experience-section-title">
-        <h2>Resume</h2>
-      </div>
+  return <main className="page-shell subpage resume-page"><div className="page-intro resume-intro"><h1>Résumé</h1><div className="resume-actions"><a href="/resume.pdf" target="_blank" rel="noreferrer">Open PDF <Arrow diagonal /></a><a href="/resume.pdf" download>Download <Arrow /></a></div></div><iframe className="pdf-frame" src="/resume.pdf" title="Aryaman Bhatia resume" /></main>;
+}
 
-      <div className="card">
-        <div className="btnrow">
-          <a className="btn primary" href="/resume.pdf" target="_blank" rel="noreferrer">Open PDF</a>
-          <a className="btn" href="/resume.pdf" download>Download</a>
-        </div>
-        <p style={{ marginTop: "12px" }}>
-          If the PDF viewer doesn't load in your browser, click <b>Open PDF</b>.
-        </p>
-      </div>
-
-      <iframe className="pdf" src="/resume.pdf" title="Resume PDF"></iframe>
-    </div>
-  );
+function Footer() {
+  return <footer className="page-shell site-footer"><span className="motto">Omnia bene evenient</span><div className="footer-links"><a href="https://www.linkedin.com/in/aryaman-bhatia-b78388372/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/AryamanB4" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:aryaman.bhatia1@gmail.com">Email</a></div></footer>;
 }
 
 function App() {
   const [currentRoute, setCurrentRoute] = useState(() => normalizeRoute(window.location.hash));
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
-
   useEffect(() => {
-    if (!window.location.hash) {
-      window.location.hash = ROUTES.home.hash;
-    }
-
-    const handleHashChange = () => {
-      setCurrentRoute(normalizeRoute(window.location.hash));
-    };
-
+    if (!window.location.hash) window.location.hash = ROUTES.home.hash;
+    const handleHashChange = () => { setCurrentRoute(normalizeRoute(window.location.hash)); window.scrollTo({ top: 0, behavior: "smooth" }); };
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
-
   useEffect(() => {
     document.title = ROUTES[currentRoute].title;
-  }, [currentRoute]);
-
-  useEffect(() => {
-    const theme = darkMode ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [darkMode]);
-
-  useEffect(() => {
-    document.querySelectorAll(".btn").forEach((btn) => btn.classList.add("shimmer"));
-  }, [currentRoute]);
-
-  const page = useMemo(() => {
-    if (currentRoute === "experience") {
-      return <ExperiencePage />;
+    if (currentRoute === "experience" || currentRoute === "projects") {
+      requestAnimationFrame(() => document.getElementById(currentRoute)?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-    if (currentRoute === "projects") {
-      return <ProjectsPage />;
-    }
-    if (currentRoute === "resume") {
-      return <ResumePage />;
-    }
-    return <HomePage />;
   }, [currentRoute]);
-
-  return (
-    <>
-      <Nav currentRoute={currentRoute} darkMode={darkMode} onToggleDarkMode={() => setDarkMode((prev) => !prev)} />
-      {page}
-      <div className="wrap">
-        <footer>
-          &copy; {new Date().getFullYear()} Aryaman Bhatia
-        </footer>
-      </div>
-    </>
-  );
+  useEffect(() => { document.documentElement.dataset.theme = darkMode ? "dark" : "light"; localStorage.setItem("theme", darkMode ? "dark" : "light"); }, [darkMode]);
+  let page = <HomePage />;
+  if (currentRoute === "tv") page = <TvPage />;
+  if (currentRoute === "resume") page = <ResumePage />;
+  return <><Header currentRoute={currentRoute} darkMode={darkMode} onToggleDarkMode={() => setDarkMode((value) => !value)} />{page}<Footer /></>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);
