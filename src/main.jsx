@@ -88,7 +88,7 @@ function Header({ currentRoute, darkMode, onToggleDarkMode }) {
         <a className="wordmark" href="#/" aria-label="Aryaman Bhatia, home"><span className="wordmark-mark">AB</span><span>Aryaman Bhatia</span></a>
         <div className="header-actions">
           <nav aria-label="Primary navigation">
-            {Object.entries(ROUTES).map(([key, route]) => <a key={key} href={route.hash} aria-current={currentRoute === key ? "page" : undefined}>{route.label}</a>)}
+            <a href={ROUTES.tv.hash} aria-current={currentRoute === "tv" ? "page" : undefined}>TV</a>
           </nav>
           <button className="theme-toggle" type="button" onClick={onToggleDarkMode} aria-label="Toggle colour theme">{darkMode ? "Light" : "Dark"}</button>
         </div>
@@ -180,7 +180,7 @@ function ShowList() {
   );
 }
 
-function HomePage() {
+function HomePage({ currentRoute }) {
   return (
     <main className="home-page">
       <section className="intro page-shell">
@@ -188,10 +188,18 @@ function HomePage() {
           <h1>Aryaman Bhatia</h1>
           <p className="intro-meta">Toronto / Kingston · Queen's University</p>
         </div>
-        <div className="intro-copy">
-          <p>Hi, I'm <strong>Aryaman Bhatia</strong>, a Computer Science student at <strong className="queens-wordmark"><span className="queens-blue">Queen's </span><span className="queens-gold">U</span><span className="queens-red">niversity</span></strong> specializing in <strong>Software Design</strong>. I enjoy building and optimizing solutions to real-world problems to create <strong>meaningful impact</strong>.</p>
-          <p>Outside of coding, I explore <strong>new technologies</strong> and train for <strong className="sport golf">golf</strong> and <strong className="sport badminton">badminton</strong>.</p>
-          <div className="contact-line"><a href="https://www.linkedin.com/in/aryaman-bhatia-b78388372/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/AryamanB4" target="_blank" rel="noreferrer">GitHub</a></div>
+        <div className="intro-body">
+          <div className="intro-copy">
+            <p>Hi, I'm <strong>Aryaman Bhatia</strong>, a Computer Science student at <strong className="queens-wordmark"><span className="queens-blue">Queen's </span><span className="queens-gold">U</span><span className="queens-red">niversity</span></strong> specializing in <strong>Software Design</strong>. I enjoy building and optimizing solutions to real-world problems to create <strong>meaningful impact</strong>.</p>
+            <p>Outside of coding, I explore <strong>new technologies</strong> and train for <strong className="sport golf">golf</strong> and <strong className="sport badminton">badminton</strong>.</p>
+            <div className="contact-line"><a href="https://www.linkedin.com/in/aryaman-bhatia-b78388372/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/AryamanB4" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:aryaman.bhatia1@gmail.com">Email</a><a href="/resume.pdf" target="_blank" rel="noreferrer">Résumé</a></div>
+          </div>
+          <aside className="page-index" aria-label="On this page">
+            <span className="page-index-label">On this page</span>
+            <a href="#/" aria-current={currentRoute === "home" ? "location" : undefined}><span>01</span>About</a>
+            <a href="#/experience" aria-current={currentRoute === "experience" ? "location" : undefined}><span>02</span>Experience</a>
+            <a href="#/projects" aria-current={currentRoute === "projects" ? "location" : undefined}><span>03</span>Projects</a>
+          </aside>
         </div>
       </section>
       <div className="page-shell content-stack">
@@ -203,7 +211,7 @@ function HomePage() {
 }
 
 function TvPage() {
-  return <main className="page-shell subpage"><div className="page-intro"><h1>TV ranking<sup>{shows.length}</sup></h1><p>My completely subjective list. Open a title for the take.</p></div><ShowList /></main>;
+  return <main className="page-shell subpage"><div className="page-intro"><h1>TV ranking<sup>{shows.length}</sup></h1><p>I love sitcoms. Open a title for the take.</p></div><ShowList /></main>;
 }
 
 function ResumePage() {
@@ -232,7 +240,7 @@ function App() {
     }
   }, [currentRoute]);
   useEffect(() => { document.documentElement.dataset.theme = darkMode ? "dark" : "light"; localStorage.setItem("theme", darkMode ? "dark" : "light"); }, [darkMode]);
-  let page = <HomePage />;
+  let page = <HomePage currentRoute={currentRoute} />;
   if (currentRoute === "tv") page = <TvPage />;
   if (currentRoute === "resume") page = <ResumePage />;
   return <><Header currentRoute={currentRoute} darkMode={darkMode} onToggleDarkMode={() => setDarkMode((value) => !value)} />{page}<Footer /></>;
